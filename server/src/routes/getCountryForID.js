@@ -3,6 +3,6 @@ const getCountryForIDHandler = require("../handlers/getCountryForIDHandler");
 
 const router = Router();
 
-router.get('/countries/name', getCountryForIDHandler )
+router.get('/countries/:idPais', getCountryForIDHandler )
 
 module.exports = router;

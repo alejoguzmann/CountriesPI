@@ -8,9 +8,7 @@ const getCountriesForNameHandler = async (req, res) => {
 
    try {
      const countriesForName = await Country.findAll({
-       where: {
-         name: { [Op.iLike]: `%${name}%`, },
-       },
+       where: {  name: { [Op.iLike]: `%${name}%`, }, },
      });
  
      if (countriesForName.length === 0) {

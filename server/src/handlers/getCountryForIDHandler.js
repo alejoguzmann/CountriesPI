@@ -1,14 +1,26 @@
 const { Country } = require("../db");
+const { Op } = require('sequelize'); 
+
 
 const getCountryForIDHandler  = async (req, res) => {
 
-try {
+  const { idPais } = req.params;
 
-  return res.status(200).json( 'message : anda')
+  try {
+    
+    const country = await Country.findOne({
+      where: { ID:  { [Op.iLike]: `%${idPais}%`, } }
+    });
 
-} catch (error) {
+    if (!country) {
+      return res.status(404).json({ message: 'country not found.' });
+    }
+
+    res.status(200).json(country); 
+
+  } catch (error) {
   
-  return res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   
 }}
   

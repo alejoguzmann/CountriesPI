@@ -1,15 +1,36 @@
-const { Activity } = require("../db");
+const { Activity, Country } = require('../db'); 
 
-const postActivities  = async (req, res) => {
+// Ruta POST para crear una actividad turística
+const postActivitiesHandler = async (req, res) => {
+  try {
+    const { name, difficulty, duration, season, countries } = req.body;
 
-try {
+    const existingActivity = await Activity.findOne({ where: { name } });                             //por si existe
 
-  return res.status(200).json( 'message : anda')
+    if (existingActivity) {
+      return res.status(400).json({ message: 'the activity already exists.' });
+    }
 
-} catch (error) {
+    if (!countries || countries.length === 0) {                                                       // relacionar el pais con una actividad al menos
+      return res.status(400).json({ message: 'You must relate at least one country to the activity.' });
+    }
+
+    const newActivity = await Activity.create({   //crea actividad
+      name,
+      difficulty,
+      duration,
+      season,
+    });
+
   
-  return res.status(500).json({ error: error.message });
-  
-}}
-  
-module.exports = postActivities ;
+    await newActivity.addCountry(countries); //relaciona paises con la actividad
+
+    res.status(200).json(newActivity);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
+module.exports = postActivitiesHandler
+
