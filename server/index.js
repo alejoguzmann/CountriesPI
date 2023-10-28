@@ -8,6 +8,7 @@ const PORT = 3001;
 conn.sync({ force: false }).then(() => {
 server.listen(PORT, async () => {
   console.log(`Server listening on port ${PORT}`);
+  
   const {data} = await axios.get('http://localhost:5000/countries');
 
   data.map(async({cca3,name,flags,continents,capital,subregion,area,population}) =>{
