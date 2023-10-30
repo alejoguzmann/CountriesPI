@@ -6,7 +6,7 @@ module.exports = (sequelize) => {
   sequelize.define('Activity', {
     ID:{
       type: DataTypes.UUID,
-      defaulValue: DataTypes.UUIDV4,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
       allowNull: false,
     },

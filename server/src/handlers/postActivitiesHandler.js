@@ -11,7 +11,7 @@ const postActivitiesHandler = async (req, res) => {
       return res.status(400).json({ message: 'the activity already exists.' });
     }
 
-    if (!countries || countries.length === 0) {                                                       // relacionar el pais con una actividad al menos
+    if (!countries || countries.length === 0) {                                                       // 1pais-1acividad
       return res.status(400).json({ message: 'You must relate at least one country to the activity.' });
     }
 
