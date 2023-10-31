@@ -1,0 +1,19 @@
+#root {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .home-title {
+    margin-top: 30px;
+    margin-bottom: 50px;
+    font-size: 75px;
+    color: aquamarine;
+  }
+
+  .home{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
