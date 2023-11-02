@@ -10,7 +10,7 @@ function Cards({allCountries, currentPage, itemsPerPage}) {
     return (
       <div className='card-list'>
         {currentItems.map((country) => (
-          <Card country={country}/>
+          <Card key={country.ID} country={country}/>
         ))}
       </div>
     )
