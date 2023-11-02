@@ -1,3 +1,4 @@
+import {Link, useLocation} from 'react-router-dom'
 
 
 
@@ -6,7 +7,9 @@ function Landing() {
     return (
       <div>
         <h1>Countries</h1>
-        <button >Home</button>
+        <Link to={'/home'}>
+          <button>Home</button>
+        </Link>
       </div>
     )
   }

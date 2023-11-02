@@ -1,14 +1,17 @@
 import Card from '../../components/card/card'
 import './cards.css'
 
-function Cards() {
+function Cards({allCountries, currentPage, itemsPerPage}) {
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = allCountries.slice(indexOfFirstItem, indexOfLastItem);
 
     return (
       <div className='card-list'>
-        <Card></Card>
-        <Card/>
-        <Card/>
-        <Card/>
+        {currentItems.map((country) => (
+          <Card country={country}/>
+        ))}
       </div>
     )
   }

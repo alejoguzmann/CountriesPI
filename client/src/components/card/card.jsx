@@ -1,12 +1,14 @@
 import './card.css'
 
-function Card() {
+function Card({country}) {
+
+  const { flags, name, continents, ID} = country
 
     return (
-      <div className='card-container'>
-        <h1>CARD</h1>
-        <p>a</p>
-        <p>b</p>
+      <div className='card-container' key={ID}>
+        <img src={flags} alt={name} width={200} height={125}/>
+        <p className='name'>{name}</p>
+        <p>{continents}</p>
       </div>
     )
   }

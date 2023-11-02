@@ -10,8 +10,16 @@
     backface-visibility: hidden;
     transform: translateZ(0);
     transition: transform o.25s ease-out;
+    color: black;
+    font-size: larger;
+    font-weight:500;
 }
 
 .card-container:hover {
     transform: scale(1.05);
+}
+
+.name{
+    font-size: 130%;
+    font-weight:bold;
 }
