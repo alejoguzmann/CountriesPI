@@ -1,29 +1,32 @@
-const { Activity, Country } = require('../db'); 
+const { Activity } = require('../db'); 
 
-// Ruta POST para crear una actividad turística
 const postActivitiesHandler = async (req, res) => {
   try {
     const { name, difficulty, duration, season, countries } = req.body;
 
-    const existingActivity = await Activity.findOne({ where: { name } });                             //por si existe
+    const existingActivity = await Activity.findOne({ where: { name } });
 
     if (existingActivity) {
-      return res.status(400).json({ message: 'the activity already exists.' });
+      return res.status(400).json({ message: 'The activity already exists.' });
     }
 
-    if (!countries || countries.length === 0) {                                                       // 1pais-1acividad
+    if (!countries || countries.length === 0) {
       return res.status(400).json({ message: 'You must relate at least one country to the activity.' });
     }
 
-    const newActivity = await Activity.create({   //crea actividad
+    // Convertir season y countries a arreglos si no lo son
+    const newSeason = Array.isArray(season) ? season : [season];
+    const newCountries = Array.isArray(countries) ? countries : [countries];
+
+    const newActivity = await Activity.create({   
       name,
       difficulty,
       duration,
-      season,
+      season: newSeason,  // Asignar el nuevo arreglo
+      countries: newCountries,  // Asignar el nuevo arreglo
     });
 
-  
-    await newActivity.addCountry(countries); //relaciona paises con la actividad
+    await newActivity.addCountry(newCountries);
 
     res.status(200).json(newActivity);
   } catch (error) {

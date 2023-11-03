@@ -1,4 +1,6 @@
 import Card from '../../components/card/card'
+import { Link } from 'react-router-dom';
+
 import './cards.css'
 
 function Cards({allCountries, currentPage, itemsPerPage}) {
@@ -10,7 +12,11 @@ function Cards({allCountries, currentPage, itemsPerPage}) {
     return (
       <div className='card-list'>
         {currentItems.map((country) => (
-          <Card key={country.ID} country={country}/>
+          <div key={country.ID} >
+            <Link to={`/detail/${country.ID}`}>
+            <Card  country={country}/>
+            </Link>
+          </div>
         ))}
       </div>
     )

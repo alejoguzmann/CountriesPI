@@ -1,7 +1,5 @@
 import {Link, useLocation} from 'react-router-dom'
 
-
-
 function Landing() {
 
     return (

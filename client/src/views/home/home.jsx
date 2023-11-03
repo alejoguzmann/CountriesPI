@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import {useSelector, useDispatch } from 'react-redux'
-import {Link, useLocation} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 import { getAllCountries, getByName } from '../../redux/actions'
 
@@ -39,9 +39,7 @@ function Home() {
       
       <NavBar handleChange={handleChange} handleSubmit={handleSubmit} />
       
-      <Link to={'/detail'}>
-        <Cards allCountries={allCountries} currentPage={currentPage} itemsPerPage={itemsPerPage} />
-      </Link>
+      <Cards allCountries={allCountries} currentPage={currentPage} itemsPerPage={itemsPerPage} />
       
       <div className='buttons'>
         <br />
