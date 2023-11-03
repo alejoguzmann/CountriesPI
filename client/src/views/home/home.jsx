@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import {useSelector, useDispatch } from 'react-redux'
-import {Link} from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-import { getAllCountries, getByName } from '../../redux/actions'
+import { getAllCountries, getByName, getByContinent  } from '../../redux/actions'
 
 import NavBar from '../../components/navBar/navBar'
 import Cards from '../../components/cards/cards'
@@ -16,10 +16,12 @@ function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10
   const [searchString, setSearchString] = useState('')
+  const [selectedContinent, setSelectedContinent] = useState(''); // Estado para el continente seleccionado
+  const filteredCountries = useSelector((state) => state.filteredCountries)
 
   const handleChange = (e) => {
     e.preventDefault();
-      setSearchString(e.target.value)
+    setSearchString(e.target.value)
   }
 
   const handleSubmit = (e) => {
@@ -27,20 +29,43 @@ function Home() {
     dispatch(getByName(searchString))
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getAllCountries())
-  },[dispatch])
+  }, [dispatch])
+
+  const uniqueContinents = [...new Set(allCountries.map(country => country.continents))];
+
+  const handleContinentChange = (e) => {
+    const selectedContinent = e.target.value;
+    setSelectedContinent(selectedContinent);
+
+    if (selectedContinent) {
+      dispatch(getByContinent(selectedContinent)); // Llama a la acción con el continente seleccionado
+    }
+  };
 
   return (
     <div className='home'>
       <h1 className='home-title'>Countries</h1>
 
       <Link to={'/create'} ><button>Create activity</button></Link>
-      
+
       <NavBar handleChange={handleChange} handleSubmit={handleSubmit} />
-      
-      <Cards allCountries={allCountries} currentPage={currentPage} itemsPerPage={itemsPerPage} />
-      
+
+      <select name="continent" id="continent" onChange={handleContinentChange}>
+        <option value="">All Continents</option>
+        {uniqueContinents.map((continent, index) => (
+          <option key={index} value={continent}>
+            {continent}
+          </option>
+        ))}
+      </select>
+
+      <Cards 
+      allCountries={filteredCountries.length ? filteredCountries : allCountries}
+      currentPage={currentPage}
+      itemsPerPage={itemsPerPage} />
+
       <div className='buttons'>
         <br />
         <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
@@ -56,6 +81,5 @@ function Home() {
     </div>
   );
 }
-  
-  export default Home
-  
+
+export default Home

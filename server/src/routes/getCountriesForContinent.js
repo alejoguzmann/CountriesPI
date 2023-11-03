@@ -3,6 +3,6 @@ const getCountriesForContinentHandler = require("../handlers/getCountriesForCont
 
 const router = Router();
 
-router.get('/continent', getCountriesForContinentHandler  )
+router.get('/continents', getCountriesForContinentHandler  )
 
 module.exports = router;

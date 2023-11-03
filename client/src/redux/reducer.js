@@ -1,7 +1,8 @@
-import { GET_ALL_COUNTRIES, GET_BY_ID, GET_BY_NAME } from "./types";
+import { GET_ALL_COUNTRIES, GET_BY_CONTINENT, GET_BY_NAME } from "./types";
 
 const initialState = {
-      allCountries: []
+      allCountries: [],
+      filteredCountries: []
 }
 
 const reducer = (state = initialState, action) => {
@@ -14,12 +15,12 @@ const reducer = (state = initialState, action) => {
         case GET_BY_NAME:
             return{
                 ...state,
-                allCountries: action.payload,
+                filteredCountries: action.payload
             }
-        case GET_BY_ID:
+        case GET_BY_CONTINENT:
             return{
-                ...state
-                
+                ...state,
+                filteredCountries: action.payload                
         }
         default:
             return state

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import {GET_ALL_COUNTRIES, GET_BY_NAME, GET_BY_ID} from './types'
+import {GET_ALL_COUNTRIES, GET_BY_NAME, GET_BY_CONTINENT} from './types'
 
 const endpointCountries = "http://localhost:3001/countries";
 const endpointActivities = "http://localhost:3001/activities";
@@ -25,11 +25,11 @@ export function getByName(name) {
   }
 }
 
-export function getById(name) {
+export function getByContinent(continents) {
   return async function (dispatch) {
-    const response = await axios (`${endpointCountries}/name?name=${name}`)
+    const response = await axios (`http://localhost:3001/continents?continents=${continents}`)
     return  dispatch({ 
-        type: GET_BY_ID, 
+        type: GET_BY_CONTINENT, 
         payload: response.data 
     });
   }
