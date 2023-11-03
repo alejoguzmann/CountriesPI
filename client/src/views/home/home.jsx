@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { getAllCountries, getByName, getByContinent  } from '../../redux/actions'
+import { getAllCountries, getByName, getByContinent, getAllActivites, countriesOrder, populationOrder } from '../../redux/actions'
 
 import NavBar from '../../components/navBar/navBar'
 import Cards from '../../components/cards/cards'
@@ -18,6 +18,31 @@ function Home() {
   const [searchString, setSearchString] = useState('')
   const [selectedContinent, setSelectedContinent] = useState(''); // Estado para el continente seleccionado
   const filteredCountries = useSelector((state) => state.filteredCountries)
+  const allActivities = useSelector((state) => state.allActivities)
+
+    const handleid = (e) => {
+        const index = e.target.selectedIndex
+        const optionElement = e.target.childNodes[index]
+        const optionElementId = optionElement.getAttribute('id')
+
+        if (optionElementId === "All") {
+            dispatch(getAllCountries())
+        } else {
+            dispatch(countriesOrder(optionElementId))
+            dispatch(populationOrder(optionElementId))
+    }}
+
+    const jandleid = (e) => {
+      const index = e.target.selectedIndex
+      const optionElement = e.target.childNodes[index]
+      const optionElementId = optionElement.getAttribute('id')
+
+      if (optionElementId === "All") {
+          dispatch(getAllCountries())
+      } else {
+          dispatch(populationOrder(optionElementId))
+  }}
+
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -61,10 +86,31 @@ function Home() {
         ))}
       </select>
 
-      <Cards 
-      allCountries={filteredCountries.length ? filteredCountries : allCountries}
-      currentPage={currentPage}
-      itemsPerPage={itemsPerPage} />
+      <select name="activities" id="activities" >
+        <option value="">filtrar por actividad</option>
+        {allActivities.map((activity, index) => (
+          <option key={index} value={activity}>
+            {activity.name}
+          </option>
+        ))}
+      </select>
+
+      <select onChange={(e) => handleid(e)}>
+                <option key = "All" id = "All" >Orden</option>
+                <option key = "Asc" id = "Asc" >A - Z</option>
+                <option key = "Des" id = "Des" >Z - A</option>
+      </select>
+
+      <select onChange={(e) => jandleid(e)}>
+                <option key = "All" id = "All" >Orden</option>
+                <option key = "Asc" id = "Asc" >asc</option>
+                <option key = "Des" id = "Des" >desc</option>
+      </select>
+
+      <Cards
+        allCountries={filteredCountries.length ? filteredCountries : allCountries}
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage} />
 
       <div className='buttons'>
         <br />
