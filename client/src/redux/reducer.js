@@ -4,13 +4,15 @@ import {
     GET_BY_NAME, 
     GET_ALL_ACTIVITIES, 
     COUTRIES_ORDER, 
-    POPULATION_ORDER 
+    POPULATION_ORDER,
+    GET_BY_ID 
 } from "./types";
 
 const initialState = {
       allCountries: [],
       filteredCountries: [],
-      allActivities: []
+      allActivities: [],
+      countryDetails: null
 }
 
 const reducer = (state = initialState, action) => {
@@ -29,6 +31,11 @@ const reducer = (state = initialState, action) => {
             return{
                 ...state,
                 filteredCountries: action.payload                
+        }
+        case GET_BY_ID:
+            return{
+                ...state,
+                countryDetails: action.payload                
         }
         case GET_ALL_ACTIVITIES:
             return {

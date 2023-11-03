@@ -20,6 +20,7 @@ function Home() {
   const filteredCountries = useSelector((state) => state.filteredCountries)
   const allActivities = useSelector((state) => state.allActivities)
 
+
     const handleid = (e) => {
         const index = e.target.selectedIndex
         const optionElement = e.target.childNodes[index]
@@ -53,6 +54,9 @@ function Home() {
     e.preventDefault()
     dispatch(getByName(searchString))
   }
+  useEffect(() => {
+    dispatch(getAllActivites())
+  }, [dispatch])
 
   useEffect(() => {
     dispatch(getAllCountries())
@@ -68,6 +72,7 @@ function Home() {
       dispatch(getByContinent(selectedContinent)); // Llama a la acción con el continente seleccionado
     }
   };
+
 
   return (
     <div className='home'>
@@ -86,7 +91,7 @@ function Home() {
         ))}
       </select>
 
-      <select name="activities" id="activities" >
+      <select name="activities" id="activities"  > 
         <option value="">filtrar por actividad</option>
         {allActivities.map((activity, index) => (
           <option key={index} value={activity}>

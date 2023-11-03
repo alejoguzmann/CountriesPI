@@ -1,22 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { useParams } from "react-router-dom";
+import { getById } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 function Detail() {
   const { ID } = useParams();
-  const [country, setCountry] = useState(null);
+  const countryDetails = useSelector((state) => state.countryDetails);
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3001/countries/${ID}`)
-      .then((response) => {
-        setCountry(response.data);
-      })
-      .catch((error) => {
-        console.error('Error en la solicitud:', error);
-      });
-  }, [ID]);
+    dispatch(getById(ID))
+    
+    return () => {
+      dispatch(getById())
+    }
+  }, [dispatch, ID])
 
   return (
     <div>
@@ -29,16 +28,16 @@ function Detail() {
         </Link>
       </div>
       <div>
-        {country ? (
+        {countryDetails ? (
           <div>
-            <img src={country.flags} alt={country.name} />
-            <p>ID: {country.ID}</p>
-            <p>Name: {country.name}</p>
-            <p>Continent:{country.continents} </p>
-            <p>Capital: {country.capital}</p>
-            <p>Subregion: {country.subregion} </p>
-            <p>Area: {country.area}</p>
-            <p>Population: {country.population}</p>
+            <img src={countryDetails.flags} alt={countryDetails.name} />
+            <p>ID: {countryDetails.ID}</p>
+            <p>Name: {countryDetails.name}</p>
+            <p>Continent:{countryDetails.continents} </p>
+            <p>Capital: {countryDetails.capital}</p>
+            <p>Subregion: {countryDetails.subregion} </p>
+            <p>Area: {countryDetails.area}</p>
+            <p>Population: {countryDetails.population}</p>
           </div>
         ) : (
           <p>Loading country details...</p>

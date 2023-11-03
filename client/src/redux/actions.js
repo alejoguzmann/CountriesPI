@@ -1,6 +1,14 @@
 import axios from 'axios'
 
-import {GET_ALL_COUNTRIES, GET_BY_NAME, GET_BY_CONTINENT, GET_ALL_ACTIVITIES, COUTRIES_ORDER, POPULATION_ORDER} from './types'
+import { 
+  GET_ALL_COUNTRIES, 
+  GET_BY_CONTINENT, 
+  GET_BY_NAME, 
+  GET_ALL_ACTIVITIES, 
+  COUTRIES_ORDER, 
+  POPULATION_ORDER,
+  GET_BY_ID 
+} from "./types";
 
 const endpointCountries = "http://localhost:3001/countries";
 const endpointActivities = "http://localhost:3001/activities";
@@ -45,13 +53,23 @@ export function getAllActivites() {
   }
 }
 
+export function getById (ID) {
+  return async function (dispatch) {
+    const response = await axios (`${endpointCountries}/${ID}`)
+    // console.log(response.data);
+    return dispatch ({
+      type: GET_BY_ID,
+      payload: response.data
+    });
+  }
+} 
+
 export function countriesOrder(filter) {
   return{
     type:COUTRIES_ORDER,
     payload: filter
   }
 }
-
 
 export function populationOrder(population) {
   return{
