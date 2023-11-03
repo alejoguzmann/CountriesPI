@@ -11,8 +11,8 @@
     transform: translateZ(0);
     transition: transform o.25s ease-out;
     color: black;
-    font-size: larger;
-    font-weight:500;
+    font-size: 20px;
+    height: 280px;
 }
 
 .card-container:hover {
@@ -20,6 +20,5 @@
 }
 
 .name{
-    font-size: 130%;
     font-weight:bold;
 }

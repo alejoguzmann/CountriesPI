@@ -14,19 +14,16 @@ const postActivitiesHandler = async (req, res) => {
       return res.status(400).json({ message: 'You must relate at least one country to the activity.' });
     }
 
-    // Convertir season y countries a arreglos si no lo son
-    const newSeason = Array.isArray(season) ? season : [season];
-    const newCountries = Array.isArray(countries) ? countries : [countries];
 
     const newActivity = await Activity.create({   
       name,
       difficulty,
       duration,
-      season: newSeason,  // Asignar el nuevo arreglo
-      countries: newCountries,  // Asignar el nuevo arreglo
+      season,
+      countries, 
     });
 
-    await newActivity.addCountry(newCountries);
+    await newActivity.addCountry(countries);
 
     res.status(200).json(newActivity);
   } catch (error) {

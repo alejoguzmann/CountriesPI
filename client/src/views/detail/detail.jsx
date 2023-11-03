@@ -24,11 +24,15 @@ function Detail() {
         <Link to={'/home'}>
           <button>Home</button>
         </Link>
+        <Link to={'/create'}>
+          <button>Create activity</button>
+        </Link>
       </div>
       <div>
         {country ? (
           <div>
             <img src={country.flags} alt={country.name} />
+            <p>ID: {country.ID}</p>
             <p>Name: {country.name}</p>
             <p>Continent:{country.continents} </p>
             <p>Capital: {country.capital}</p>
