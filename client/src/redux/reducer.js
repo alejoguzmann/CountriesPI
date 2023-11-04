@@ -5,14 +5,16 @@ import {
     GET_ALL_ACTIVITIES, 
     COUTRIES_ORDER, 
     POPULATION_ORDER,
-    GET_BY_ID 
+    GET_BY_ID,
+    GET_BY_ACTIVITY
 } from "./types";
 
 const initialState = {
       allCountries: [],
       filteredCountries: [],
       allActivities: [],
-      countryDetails: null
+      countryDetails: null,
+      filteredCountriesByActivity: []
 }
 
 const reducer = (state = initialState, action) => {
@@ -42,6 +44,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 allActivities: action.payload,
           };
+        case GET_BY_ACTIVITY: 
+          return{
+            ...state,
+            filteredCountriesByActivity: action.payload
+          }
         case COUTRIES_ORDER:
             let order = action.payload === "Asc"
                 ? state.allCountries.sort(function (a, b) {

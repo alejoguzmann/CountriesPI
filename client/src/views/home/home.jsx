@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { getAllCountries, getByName, getByContinent, getAllActivites, countriesOrder, populationOrder } from '../../redux/actions'
+import { getAllCountries, getByName, getByContinent, getAllActivites, countriesOrder, populationOrder, getByActivity } from '../../redux/actions'
 
 import NavBar from '../../components/navBar/navBar'
 import Cards from '../../components/cards/cards'
@@ -19,6 +19,7 @@ function Home() {
   const [selectedContinent, setSelectedContinent] = useState(''); // Estado para el continente seleccionado
   const filteredCountries = useSelector((state) => state.filteredCountries)
   const allActivities = useSelector((state) => state.allActivities)
+  const filteredCountriesByActivity = useSelector((state) => state.filteredCountriesByActivity)
 
 
     const handleid = (e) => {
@@ -73,6 +74,10 @@ function Home() {
     }
   };
 
+  const handleActivityChange = (e) => {
+    const selectedActivity = e.target.value;
+    dispatch(getByActivity(selectedActivity)); // Llama a la acción con la actividad seleccionada
+  };
 
   return (
     <div className='home'>
@@ -91,7 +96,7 @@ function Home() {
         ))}
       </select>
 
-      <select name="activities" id="activities"  > 
+      <select name="activities" id="activities" onChange={handleActivityChange}> 
         <option value="">filtrar por actividad</option>
         {allActivities.map((activity, index) => (
           <option key={index} value={activity}>

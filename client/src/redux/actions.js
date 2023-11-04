@@ -7,7 +7,8 @@ import {
   GET_ALL_ACTIVITIES, 
   COUTRIES_ORDER, 
   POPULATION_ORDER,
-  GET_BY_ID 
+  GET_BY_ID,
+  GET_BY_ACTIVITY 
 } from "./types";
 
 const endpointCountries = "http://localhost:3001/countries";
@@ -76,4 +77,14 @@ export function populationOrder(population) {
     type:POPULATION_ORDER,
     payload: population
   }
+}
+
+export function getByActivity(activity) {
+  return async function (dispatch) {
+    const response = await axios(`$http://localhost:3001/activity?nameactivity=${activity}`);
+    return dispatch({
+      type: GET_BY_ACTIVITY,
+      payload: response.data,
+    });
+  };
 }

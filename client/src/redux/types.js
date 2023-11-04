@@ -12,3 +12,5 @@ export const COUTRIES_ORDER = "COUTRIES_ORDER"
 export const POPULATION_ORDER = "POPULATION_ORDER"
 
 export const GET_BY_ID = "GET_BY_ID"
+
+export const GET_BY_ACTIVITY ="GET_BY_ACTIVITY"
