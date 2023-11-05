@@ -14,7 +14,6 @@ const initialState = {
       filteredCountries: [],
       allActivities: [],
       countryDetails: null,
-      filteredCountriesByActivity: []
 }
 
 const reducer = (state = initialState, action) => {
@@ -47,7 +46,7 @@ const reducer = (state = initialState, action) => {
         case GET_BY_ACTIVITY: 
           return{
             ...state,
-            filteredCountriesByActivity: action.payload
+            filteredCountries: action.payload
           }
         case COUTRIES_ORDER:
             let order = action.payload === "Asc"

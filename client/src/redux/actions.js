@@ -81,7 +81,7 @@ export function populationOrder(population) {
 
 export function getByActivity(activity) {
   return async function (dispatch) {
-    const response = await axios(`$http://localhost:3001/activity?nameactivity=${activity}`);
+    const response = await axios(`http://localhost:3001/activity?nameActivity=${activity}`);
     return dispatch({
       type: GET_BY_ACTIVITY,
       payload: response.data,

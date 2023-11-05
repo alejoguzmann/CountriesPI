@@ -19,7 +19,9 @@ function Home() {
   const [selectedContinent, setSelectedContinent] = useState(''); // Estado para el continente seleccionado
   const filteredCountries = useSelector((state) => state.filteredCountries)
   const allActivities = useSelector((state) => state.allActivities)
-  const filteredCountriesByActivity = useSelector((state) => state.filteredCountriesByActivity)
+  // const filteredCountriesByActivity = useSelector((state) => state.filteredCountriesByActivity)
+  const [selectedActivity, setSelectedActivity] = useState(''); // Estado para la ctivity seleccionado
+
 
 
     const handleid = (e) => {
@@ -76,7 +78,11 @@ function Home() {
 
   const handleActivityChange = (e) => {
     const selectedActivity = e.target.value;
-    dispatch(getByActivity(selectedActivity)); // Llama a la acción con la actividad seleccionada
+    setSelectedActivity(selectedActivity)
+
+    if(selectedActivity){
+      dispatch(getByActivity(selectedActivity)); // Llama a la acción con la actividad seleccionada
+    }
   };
 
   return (
@@ -99,7 +105,7 @@ function Home() {
       <select name="activities" id="activities" onChange={handleActivityChange}> 
         <option value="">filtrar por actividad</option>
         {allActivities.map((activity, index) => (
-          <option key={index} value={activity}>
+          <option key={index} value={activity.name}>
             {activity.name}
           </option>
         ))}
