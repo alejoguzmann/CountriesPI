@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { getAllCountries } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-
 import axios from 'axios';
 
 function Create() {
@@ -14,63 +13,84 @@ function Create() {
     countries: [],
   });
 
-  const [selectedCountries, setSelectedCountries] = useState([]); // Estado para los países seleccionados
-  
+  const [selectedCountries, setSelectedCountries] = useState([]);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [errors, setErrors] = useState({}); // Estado para almacenar errores
 
   const handleChange = (e) => {
-    const { name, value, options } = e.target;
+    const { name, value } = e.target;
+    const updatedInput = {
+      ...input,
+      [name]: value,
+    };
+    setInput(updatedInput);
 
-    if (name === "season") {
-      if (input.season.includes(value)) {
-        setInput({
-          ...input,
-          season: input.season.filter((season) => season !== value),
-        });
-      } else {
-        setInput({
-          ...input,
-          season: [...input.season, value],
-        });
-      }
-    } else if (name === "countries") {
-      const selectedCountryValues = Array.from(options)
-        .filter((option) => option.selected)
-        .map((option) => option.value);
+    // Validar los campos y actualizar los errores
+    const validationErrors = validateFields(updatedInput);
+    setErrors(validationErrors);
 
-      setSelectedCountries(selectedCountryValues);
-    } else {
-      setInput({
-        ...input,
-        [name]: value,
-      });
-    }
+    // Habilitar/deshabilitar el botón en función de si hay errores
+    setIsButtonDisabled(Object.keys(validationErrors).length > 0);
   };
 
-  const dispatch = useDispatch()
-
-  const allCountries = useSelector((state) => state.allCountries)
+  const dispatch = useDispatch();
+  const allCountries = useSelector((state) => state.allCountries);
 
   useEffect(() => {
-    dispatch(getAllCountries())
-  }, [dispatch])
+    dispatch(getAllCountries());
+  }, [dispatch]);
+
+  const validateFields = (data) => {
+    const { name, difficulty, duration, season, countries } = data;
+    const validationErrors = {};
+
+    // Realizar validaciones y agregar errores si es necesario
+    if (!/^[A-Za-z\s]+$/.test(name)) {
+      validationErrors.name = "El nombre no puede contener números.";
+    }
+    if (!/^[1-5]$/.test(difficulty)) {
+      validationErrors.difficulty = "Seleccione la dificultad.";
+    }
+    if (duration.trim() === '') { // Validación para campo obligatorio
+      validationErrors.duration = "La duración es obligatoria.";
+    }
+    if (season.length === 0) {
+      validationErrors.season = "Seleccione al menos una estación.";
+    }
+    if (countries.length === 0) {
+      validationErrors.countries = "Seleccione al menos un país.";
+    }
+
+    return validationErrors;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const dataToSend = {
       ...input,
-      countries: selectedCountries, // Usa los países seleccionados
+      countries: selectedCountries,
     };
 
     axios
       .post('http://localhost:3001/activity', dataToSend)
       .then((response) => {
         console.log('Respuesta del servidor:', response.data);
+        setInput({
+          name: '',
+          difficulty: '',
+          duration: '',
+          season: [],
+          countries: [],
+        });
+        setSelectedCountries([]);
+        setIsButtonDisabled(true);
+        setErrors({}); // Restablecer errores después del envío exitoso
       })
       .catch((error) => {
         console.error('Error en la solicitud:', error);
       });
-  }
+  };
 
   return (
     <div>
@@ -87,6 +107,7 @@ function Create() {
               value={input.name}
               onChange={handleChange}
             />
+            {errors.name && <p className="error">{errors.name}</p>}
           </div>
         </div>
         <br />
@@ -105,6 +126,7 @@ function Create() {
               <option value="4">4</option>
               <option value="5">5</option>
             </select>
+            {errors.difficulty && <p className="error">{errors.difficulty}</p>}
           </div>
         </div>
         <br />
@@ -129,6 +151,7 @@ function Create() {
               <option value="10hs">10hs</option>
             </select>
           </div>
+          {errors.duration && <p className="error">{errors.duration}</p>}
         </div>
         <br />
         <div>
@@ -166,6 +189,7 @@ function Create() {
               checked={input.season.includes("winter")}
               onChange={handleChange}
             />
+          {errors.season && <p className="error">{errors.season}</p>}
           </div>
         </div>
         <br />
@@ -184,6 +208,7 @@ function Create() {
                 </option>
               ))}
             </select>
+          {errors.countries && <p className="error">{errors.countries}</p>}
           </div>
         </div>
         <div>
@@ -197,7 +222,7 @@ function Create() {
             })}
           </ul>
         </div>
-        <button type="submit">Send</button>
+        <button type="submit" disabled={isButtonDisabled}>Send</button>
       </form>
     </div>
   );
