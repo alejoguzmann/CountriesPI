@@ -12,33 +12,72 @@ function Create() {
     season: [],
     countries: [],
   });
-
+  
   const [selectedCountries, setSelectedCountries] = useState([]);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const [errors, setErrors] = useState({}); // Estado para almacenar errores
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    const updatedInput = {
-      ...input,
-      [name]: value,
-    };
-    setInput(updatedInput);
-
-    // Validar los campos y actualizar los errores
-    const validationErrors = validateFields(updatedInput);
-    setErrors(validationErrors);
-
-    // Habilitar/deshabilitar el botón en función de si hay errores
-    setIsButtonDisabled(Object.keys(validationErrors).length > 0);
-  };
-
+  // const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [errors, setErrors] = useState({}); // Estado para almacenar erroresad
   const dispatch = useDispatch();
   const allCountries = useSelector((state) => state.allCountries);
+  
+  const handleChange = (e) => {
+    const { name, value, type, options } = e.target;
+    if (type === 'checkbox') {
+      handleCheckboxChange(name, value);
+    } else if (type === 'select-multiple') {
+      handleSelectChange(name, options);
+    } else {
+      setInput({
+        ...input,
+        [name]: value,
+      });
+    }
+
+    // Validar los campos y actualizar los errores
+    const validationErrors = validateFields(input);
+    setErrors(validationErrors);
+  };
+
+  const handleCheckboxChange = (name, value) => {
+    const currentValues = [...input[name]];
+    if (currentValues.includes(value)) {
+      currentValues.splice(currentValues.indexOf(value), 1);
+    } else {
+      currentValues.push(value);
+    }
+    setInput({
+      ...input,
+      [name]: currentValues,
+    });
+  };
+
+  const handleSelectChange = (name, options) => {
+    const selectedValues = Array.from(options)
+      .filter((option) => option.selected)
+      .map((option) => option.value);
+    setSelectedCountries(selectedValues); 
+  };
+
 
   useEffect(() => {
     dispatch(getAllCountries());
   }, [dispatch]);
+
+  useEffect(() => {
+    // Llamar a la validación de campos cada vez que cambie el estado 'input'
+    const validationErrors = validateFields(input);
+    setErrors(validationErrors);
+  }, [input]);
+  
+  // ...
+  
+  useEffect(() => {
+    // Llamar a la validación de campos cada vez que cambie el estado 'selectedCountries'
+    const validationErrors = validateFields({
+      ...input,
+      countries: selectedCountries,
+    });
+    setErrors(validationErrors);
+  }, [selectedCountries]);
 
   const validateFields = (data) => {
     const { name, difficulty, duration, season, countries } = data;
@@ -90,6 +129,28 @@ function Create() {
       .catch((error) => {
         console.error('Error en la solicitud:', error);
       });
+  };
+
+  const isSubmitButtonDisabled = () => {
+    // Verificar si hay errores en el estado 'errors'
+    for (const errorKey in errors) {
+      if (errors[errorKey]) {
+        return true; // Botón deshabilitado si se encuentra un error
+      }
+    }
+  
+    // Verificar si hay campos requeridos vacíos
+    if (
+      input.name.trim() === '' ||
+      input.difficulty.trim() === '' ||
+      input.duration.trim() === '' ||
+      input.season.length === 0 ||
+      selectedCountries.length === 0
+    ) {
+      return true; // Botón deshabilitado si hay campos requeridos vacíos
+    }
+  
+    return false; // Botón habilitado si no hay errores ni campos requeridos vacíos
   };
 
   return (
@@ -157,39 +218,44 @@ function Create() {
         <div>
           <label>Season</label>
           <div>
-            <label htmlFor="spring">Spring</label>
-            <input
-              type="checkbox"
-              name="season"
-              value="spring"
-              checked={input.season.includes("spring")}
-              onChange={handleChange}
-            />
-            <label htmlFor="summer">Summer</label>
-            <input
-              type="checkbox"
-              name="season"
-              value="summer"
-              checked={input.season.includes("summer")}
-              onChange={handleChange}
-            />
-            <label htmlFor="autumn">Autumn</label>
-            <input
-              type="checkbox"
-              name="season"
-              value="autumn"
-              checked={input.season.includes("autumn")}
-              onChange={handleChange}
-            />
-            <label htmlFor="winter">Winter</label>
-            <input
-              type="checkbox"
-              name="season"
-              value="winter"
-              checked={input.season.includes("winter")}
-              onChange={handleChange}
-            />
-          {errors.season && <p className="error">{errors.season}</p>}
+            
+              <label htmlFor="spring">Spring</label>
+              <input
+                type="checkbox"
+                name="season"
+                value="spring"
+                checked={input.season.includes("spring")}
+                onChange={handleChange}
+              />
+            
+              <label htmlFor="summer">Summer</label>
+              <input
+                type="checkbox"
+                name="season"
+                value="summer"
+                checked={input.season.includes("summer")}
+                onChange={handleChange}
+              />
+           
+              <label htmlFor="autumn">Autumn</label>
+              <input
+                type="checkbox"
+                name="season"
+                value="autumn"
+                checked={input.season.includes("autumn")}
+                onChange={handleChange}
+              />
+          
+              <label htmlFor="winter">Winter</label>
+              <input
+                type="checkbox"
+                name="season"
+                value="winter"
+                checked={input.season.includes("winter")}
+                onChange={handleChange}
+              />
+            
+            {errors.season && <p className="error">{errors.season}</p>}
           </div>
         </div>
         <br />
@@ -208,7 +274,7 @@ function Create() {
                 </option>
               ))}
             </select>
-          {errors.countries && <p className="error">{errors.countries}</p>}
+            {errors.countries && <p className="error">{errors.countries}</p>}
           </div>
         </div>
         <div>
@@ -222,7 +288,7 @@ function Create() {
             })}
           </ul>
         </div>
-        <button type="submit" disabled={isButtonDisabled}>Send</button>
+        <button type="submit" disabled={isSubmitButtonDisabled()}>Send</button>
       </form>
     </div>
   );
