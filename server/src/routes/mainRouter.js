@@ -6,6 +6,7 @@ const postActivities = require('./postActivities')
 const getCountryForID = require('./getCountryForID')
 const getCountriesForContinent = require('./getCountriesForContinent')
 const getCountriesForActivity = require('./getCountriesForActivity')
+const getActivityForCountries = require('./getActivityForCountries')
 
 const router = Router();
 
@@ -16,7 +17,6 @@ router.use(getAllActivities)
 router.use(postActivities)
 router.use(getCountriesForContinent)
 router.use(getCountriesForActivity)
-
-
+router.use(getActivityForCountries)
 
 module.exports = router;

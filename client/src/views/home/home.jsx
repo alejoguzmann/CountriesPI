@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { getAllCountries, getByName, getByContinent, getAllActivites, countriesOrder, populationOrder, getByActivity } from '../../redux/actions'
+import { getAllCountries, getByName, getByContinent, getAllActivites, countriesOrder, populationOrder, getByActivity, clearFilter } from '../../redux/actions'
 
 import NavBar from '../../components/navBar/navBar'
 import Cards from '../../components/cards/cards'
@@ -19,33 +19,33 @@ function Home() {
   const [selectedContinent, setSelectedContinent] = useState(''); // Estado para el continente seleccionado
   const filteredCountries = useSelector((state) => state.filteredCountries)
   const allActivities = useSelector((state) => state.allActivities)
-  // const filteredCountriesByActivity = useSelector((state) => state.filteredCountriesByActivity)
   const [selectedActivity, setSelectedActivity] = useState(''); // Estado para la ctivity seleccionado
 
 
 
-    const handleid = (e) => {
-        const index = e.target.selectedIndex
-        const optionElement = e.target.childNodes[index]
-        const optionElementId = optionElement.getAttribute('id')
+  const handleid = (e) => {
+    const index = e.target.selectedIndex
+    const optionElement = e.target.childNodes[index]
+    const optionElementId = optionElement.getAttribute('id')
 
-        if (optionElementId === "All") {
-            dispatch(getAllCountries())
-        } else {
-            dispatch(countriesOrder(optionElementId))
-            dispatch(populationOrder(optionElementId))
-    }}
+    if (optionElementId === "All") {
+      dispatch(getAllCountries())
+    } else {
+      dispatch(countriesOrder(optionElementId))
+    }
+  }
 
-    const jandleid = (e) => {
-      const index = e.target.selectedIndex
-      const optionElement = e.target.childNodes[index]
-      const optionElementId = optionElement.getAttribute('id')
+  const jandleid = (e) => {
+    const index = e.target.selectedIndex
+    const optionElement = e.target.childNodes[index]
+    const optionElementId = optionElement.getAttribute('id')
 
-      if (optionElementId === "All") {
-          dispatch(getAllCountries())
-      } else {
-          dispatch(populationOrder(optionElementId))
-  }}
+    if (optionElementId === "All") {
+      dispatch(getAllCountries())
+    } else {
+      dispatch(populationOrder(optionElementId))
+    }
+  }
 
 
   const handleChange = (e) => {
@@ -69,70 +69,78 @@ function Home() {
 
   const handleContinentChange = (e) => {
     const selectedContinent = e.target.value;
-    setSelectedContinent(selectedContinent);
 
-    if (selectedContinent) {
-      dispatch(getByContinent(selectedContinent)); // Llama a la acción con el continente seleccionado
+    if (selectedContinent === "") {
+      dispatch(clearFilter());
+      setSelectedContinent(""); // Restablece el estado del continente
+    } else {
+      dispatch(getByContinent(selectedContinent));
+      setSelectedContinent(selectedContinent);
     }
   };
 
   const handleActivityChange = (e) => {
     const selectedActivity = e.target.value;
-    setSelectedActivity(selectedActivity)
 
-    if(selectedActivity){
+    if (selectedActivity === "") {
+      dispatch(clearFilter())
+      setSelectedActivity("")
+    } else {
       dispatch(getByActivity(selectedActivity)); // Llama a la acción con la actividad seleccionada
+      setSelectedActivity(selectedActivity)
     }
   };
 
   return (
     <div className='home'>
-      <h1 className='home-title'>Countries</h1>
 
-      <Link to={'/create'} ><button>Create activity</button></Link>
+      <div className='sup'>
+        <h1 className='home-title'>Countries</h1>
+        <div className='nav'>
+        <NavBar className='create' handleChange={handleChange} handleSubmit={handleSubmit} />
+        </div>
+      </div>
 
-      <NavBar handleChange={handleChange} handleSubmit={handleSubmit} />
-
-      <select name="continent" id="continent" onChange={handleContinentChange}>
-        <option value="">All Continents</option>
-        {uniqueContinents.map((continent, index) => (
-          <option key={index} value={continent}>
-            {continent}
-          </option>
-        ))}
-      </select>
-
-      <select name="activities" id="activities" onChange={handleActivityChange}> 
-        <option value="">filtrar por actividad</option>
-        {allActivities.map((activity, index) => (
-          <option key={index} value={activity.name}>
-            {activity.name}
-          </option>
-        ))}
-      </select>
-
-      <select onChange={(e) => handleid(e)}>
-                <option key = "All" id = "All" >Orden</option>
-                <option key = "Asc" id = "Asc" >A - Z</option>
-                <option key = "Des" id = "Des" >Z - A</option>
-      </select>
-
-      <select onChange={(e) => jandleid(e)}>
-                <option key = "All" id = "All" >Orden</option>
-                <option key = "Asc" id = "Asc" >asc</option>
-                <option key = "Des" id = "Des" >desc</option>
-      </select>
-
-      <Cards
-        allCountries={filteredCountries.length ? filteredCountries : allCountries}
-        currentPage={currentPage}
-        itemsPerPage={itemsPerPage} />
+      <div className='filter'>
+        <select name="continent" id="continent" onChange={handleContinentChange}>
+          <option value="">Filter by Continents</option>
+          {uniqueContinents.map((continent, index) => (
+            <option key={index} value={continent}>
+              {continent}
+            </option>
+          ))}
+        </select>
+        <select name="activities" id="activities" onChange={handleActivityChange}>
+          <option value="">Filter by activity</option>
+          {allActivities.map((activity, index) => (
+            <option key={index} value={activity.name}>
+              {activity.name}
+            </option>
+          ))}
+        </select>
+        <select name='alphabetical order' onChange={(e) => handleid(e)}>
+          <option key="All" id="All" >Alphabetical order</option>
+          <option key="Asc" id="Asc" >A - Z</option>
+          <option key="Des" id="Des" >Z - A</option>
+        </select>
+        <select onChange={(e) => jandleid(e)}>
+          <option key="All" id="All" >Order by population</option>
+          <option key="Asc" id="Asc" >Ascending order</option>
+          <option key="Des" id="Des" >Descending order</option>
+        </select>
+      </div>
+      <div>
+        <Cards
+          allCountries={filteredCountries.length ? filteredCountries : allCountries}
+          currentPage={currentPage}
+          itemsPerPage={itemsPerPage} />
+      </div>
 
       <div className='buttons'>
-        <br />
         <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
           Previus page
         </button>
+
         <button
           onClick={() => setCurrentPage(currentPage + 1)}
           disabled={currentPage * itemsPerPage >= allCountries.length}

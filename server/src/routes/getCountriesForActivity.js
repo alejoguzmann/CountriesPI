@@ -12,7 +12,6 @@ router.get('/activity', async (req, res) => {
         where: { name: nameActivity }
       })
     const idsCountries = activity.countries
-    console.log(idsCountries);
 
     const countries = await Country.findAll({
         where: { ID: {

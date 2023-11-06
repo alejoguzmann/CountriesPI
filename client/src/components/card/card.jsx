@@ -2,7 +2,7 @@ import './card.css'
 
 function Card({country}) {
 
-  const { flags, name, continents, ID} = country
+  const { flags, name, continents, population, ID} = country
 
     return (
       <div className='card-container' key={ID} >

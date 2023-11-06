@@ -6,7 +6,10 @@ import {
     COUTRIES_ORDER, 
     POPULATION_ORDER,
     GET_BY_ID,
-    GET_BY_ACTIVITY
+    GET_BY_ACTIVITY,
+    CLEAR_DETAIL,
+    CLEAR_FILTER,
+    ACTIVITY_BY_CONTRIES
 } from "./types";
 
 const initialState = {
@@ -14,6 +17,7 @@ const initialState = {
       filteredCountries: [],
       allActivities: [],
       countryDetails: null,
+      activityCountryDetails: null
 }
 
 const reducer = (state = initialState, action) => {
@@ -38,6 +42,22 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 countryDetails: action.payload                
         }
+        case ACTIVITY_BY_CONTRIES:
+            return{
+                ...state,
+                activityCountryDetails: action.payload
+            }
+        case CLEAR_DETAIL: 
+            return{
+                ...state,
+                countryDetails: null,
+                activityCountryDetails: null
+            }  
+        case CLEAR_FILTER:
+            return{
+                ...state,
+                filteredCountries: []
+            }
         case GET_ALL_ACTIVITIES:
             return {
                 ...state,

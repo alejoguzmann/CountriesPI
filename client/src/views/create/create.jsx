@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import axios from 'axios';
 
+import './create.css'
+
 function Create() {
   const [input, setInput] = useState({
     name: '',
@@ -12,13 +14,12 @@ function Create() {
     season: [],
     countries: [],
   });
-  
+
   const [selectedCountries, setSelectedCountries] = useState([]);
-  // const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [errors, setErrors] = useState({}); // Estado para almacenar erroresad
   const dispatch = useDispatch();
   const allCountries = useSelector((state) => state.allCountries);
-  
+
   const handleChange = (e) => {
     const { name, value, type, options } = e.target;
     if (type === 'checkbox') {
@@ -54,7 +55,7 @@ function Create() {
     const selectedValues = Array.from(options)
       .filter((option) => option.selected)
       .map((option) => option.value);
-    setSelectedCountries(selectedValues); 
+    setSelectedCountries(selectedValues);
   };
 
 
@@ -67,9 +68,9 @@ function Create() {
     const validationErrors = validateFields(input);
     setErrors(validationErrors);
   }, [input]);
-  
+
   // ...
-  
+
   useEffect(() => {
     // Llamar a la validación de campos cada vez que cambie el estado 'selectedCountries'
     const validationErrors = validateFields({
@@ -123,7 +124,6 @@ function Create() {
           countries: [],
         });
         setSelectedCountries([]);
-        setIsButtonDisabled(true);
         setErrors({}); // Restablecer errores después del envío exitoso
       })
       .catch((error) => {
@@ -138,7 +138,7 @@ function Create() {
         return true; // Botón deshabilitado si se encuentra un error
       }
     }
-  
+
     // Verificar si hay campos requeridos vacíos
     if (
       input.name.trim() === '' ||
@@ -149,14 +149,12 @@ function Create() {
     ) {
       return true; // Botón deshabilitado si hay campos requeridos vacíos
     }
-  
+
     return false; // Botón habilitado si no hay errores ni campos requeridos vacíos
   };
 
   return (
     <div>
-      <h1>Create activity</h1>
-
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="name">Name</label>
@@ -171,7 +169,6 @@ function Create() {
             {errors.name && <p className="error">{errors.name}</p>}
           </div>
         </div>
-        <br />
         <div>
           <label htmlFor="difficulty">Difficulty</label>
           <div>
@@ -190,7 +187,6 @@ function Create() {
             {errors.difficulty && <p className="error">{errors.difficulty}</p>}
           </div>
         </div>
-        <br />
         <div>
           <label htmlFor="duration">Duration</label>
           <div>
@@ -214,11 +210,10 @@ function Create() {
           </div>
           {errors.duration && <p className="error">{errors.duration}</p>}
         </div>
-        <br />
         <div>
           <label>Season</label>
-          <div>
-            
+          <div className="season">
+            <div className="checkbox">
               <label htmlFor="spring">Spring</label>
               <input
                 type="checkbox"
@@ -227,7 +222,8 @@ function Create() {
                 checked={input.season.includes("spring")}
                 onChange={handleChange}
               />
-            
+            </div>
+            <div className="checkbox">
               <label htmlFor="summer">Summer</label>
               <input
                 type="checkbox"
@@ -236,7 +232,8 @@ function Create() {
                 checked={input.season.includes("summer")}
                 onChange={handleChange}
               />
-           
+            </div>
+            <div className="checkbox">
               <label htmlFor="autumn">Autumn</label>
               <input
                 type="checkbox"
@@ -245,7 +242,8 @@ function Create() {
                 checked={input.season.includes("autumn")}
                 onChange={handleChange}
               />
-          
+            </div>
+            <div className="checkbox">
               <label htmlFor="winter">Winter</label>
               <input
                 type="checkbox"
@@ -254,11 +252,10 @@ function Create() {
                 checked={input.season.includes("winter")}
                 onChange={handleChange}
               />
-            
-            {errors.season && <p className="error">{errors.season}</p>}
+            </div>
           </div>
+          {errors.season && <p className="error">{errors.season}</p>}
         </div>
-        <br />
         <div>
           <label htmlFor="countries">Countries</label>
           <div>

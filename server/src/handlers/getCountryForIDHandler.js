@@ -1,4 +1,4 @@
-const { Country } = require("../db");
+const { Country, Activity } = require("../db");
 const { Op } = require('sequelize'); 
 
 
@@ -9,7 +9,7 @@ const getCountryForIDHandler  = async (req, res) => {
   try {
     
     const country = await Country.findOne({
-      where: { ID:  { [Op.iLike]: `%${ID}%`, } }
+      where: { ID:  { [Op.iLike]: `%${ID}%`, } },
     });
 
     if (!country) {

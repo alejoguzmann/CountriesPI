@@ -14,3 +14,9 @@ export const POPULATION_ORDER = "POPULATION_ORDER"
 export const GET_BY_ID = "GET_BY_ID"
 
 export const GET_BY_ACTIVITY ="GET_BY_ACTIVITY"
+
+export const CLEAR_DETAIL = "CLEAR_DETAIL"
+
+export const CLEAR_FILTER = "CLEAR_FILTER"
+
+export const ACTIVITY_BY_CONTRIES = "ACTIVITY_BY_CONTRIES"

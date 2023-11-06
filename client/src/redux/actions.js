@@ -8,7 +8,10 @@ import {
   COUTRIES_ORDER, 
   POPULATION_ORDER,
   GET_BY_ID,
-  GET_BY_ACTIVITY 
+  GET_BY_ACTIVITY,
+  CLEAR_DETAIL,
+  CLEAR_FILTER,
+  ACTIVITY_BY_CONTRIES
 } from "./types";
 
 const endpointCountries = "http://localhost:3001/countries";
@@ -64,6 +67,28 @@ export function getById (ID) {
     });
   }
 } 
+
+export function activityByCountry(ID) {
+  return async function (dispatch) {
+    const response = await axios (`http://localhost:3001/activity/${ID}`)
+    // console.log(response.data);
+    return dispatch ({
+      type: ACTIVITY_BY_CONTRIES,
+      payload: response.data
+    });
+  }}
+
+export function clearDetail () {
+  return{
+    type: CLEAR_DETAIL
+  }
+}
+
+export function clearFilter() {
+  return{
+    type: CLEAR_FILTER
+  }
+}
 
 export function countriesOrder(filter) {
   return{

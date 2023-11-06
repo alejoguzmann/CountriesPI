@@ -1,12 +1,12 @@
-import {Link, useLocation} from 'react-router-dom'
+import {Link} from 'react-router-dom'
+import './landing.css'
 
 function Landing() {
 
     return (
-      <div>
-        <h1>Countries</h1>
+      <div className='landing' >
         <Link to={'/home'}>
-          <button>Home</button>
+          <button id='button'>Home</button>
         </Link>
       </div>
     )
