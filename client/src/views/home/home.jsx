@@ -72,7 +72,7 @@ function Home() {
 
     if (selectedContinent === "") {
       dispatch(clearFilter());
-      setSelectedContinent(""); // Restablece el estado del continente
+      setSelectedContinent(""); 
     } else {
       dispatch(getByContinent(selectedContinent));
       setSelectedContinent(selectedContinent);

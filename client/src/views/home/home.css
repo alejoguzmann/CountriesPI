@@ -1,15 +1,15 @@
 body{
   max-width: 1500px;
-  margin: 0 auto;
+  margin: 0;
   text-align: center;
   display: flex;
   justify-content: center;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
-  font-weight: 400;
-  color-scheme: light dark;
+  font-weight: 400px;
+  color-scheme: light ;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #0B1329;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -20,26 +20,26 @@ body{
 
 .home-title {
   margin-top: 0px;
-  margin-bottom: 30px;
+  margin-bottom: 0px;
   font-size: 70px;
+  
 }
 
 .sup{
   display: flex;
   justify-content: space-between;
-  margin-top: 5px;
 }
 
 .nav{
   display: flex;
-  margin-top: 10px;
+  margin-top: 30px;
 }
 
 .filter {
   display: flex;
   justify-content: space-around;
   margin-bottom: 30px;
-  margin-top: 15px;
+  margin-top: 0px;
 }
 
 .buttons{
@@ -55,7 +55,7 @@ select{
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #A0CED9;
   cursor: pointer;
   transition: border-color 0.25s;
 }

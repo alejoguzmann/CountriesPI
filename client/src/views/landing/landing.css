@@ -1,5 +1,5 @@
 #BG{
-    background-image: url(background.jpg) ;
+    background-image: url(BG.jpg) ;
     background-size: cover;
     background-position: center;
     padding: 0px;
@@ -8,8 +8,7 @@
     width: 1406px;
 }
 #button{
-  margin-top: 120px;
-  margin-right: 200px;
+  margin: 280px 0px 0px 1150px;
 }
 
 button {
@@ -19,7 +18,7 @@ button {
     font-size: 1em;
     font-weight: 500;
     font-family: inherit;
-    background-color: #1a1a1a;
+    background-color: #A0CED9;
     cursor: pointer;
     transition: border-color 0.25s;
   }
