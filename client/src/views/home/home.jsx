@@ -95,7 +95,7 @@ function Home() {
     <div className='home'>
 
       <div className='sup'>
-        <h1 className='home-title'>Countries</h1>
+        <Link to={'/home'}><h1 className='home-title'>Countries</h1></Link>
         <div className='nav'>
         <NavBar className='create' handleChange={handleChange} handleSubmit={handleSubmit} />
         </div>
