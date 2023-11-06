@@ -13,16 +13,22 @@ function Home() {
 
   const dispatch = useDispatch()
   const allCountries = useSelector((state) => state.allCountries)
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10
-  const [searchString, setSearchString] = useState('')
-  const [selectedContinent, setSelectedContinent] = useState(''); // Estado para el continente seleccionado
   const filteredCountries = useSelector((state) => state.filteredCountries)
   const allActivities = useSelector((state) => state.allActivities)
-  const [selectedActivity, setSelectedActivity] = useState(''); // Estado para la ctivity seleccionado
+  const [searchString, setSearchString] = useState('')
+  const [selectedContinent, setSelectedContinent] = useState(''); 
+  const [selectedActivity, setSelectedActivity] = useState(''); 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10
+  
+  useEffect(() => {
+    dispatch(getAllActivites())
+  }, [dispatch])
 
-
-
+  useEffect(() => {
+    dispatch(getAllCountries())
+  }, [dispatch])
+  
   const handleid = (e) => {
     const index = e.target.selectedIndex
     const optionElement = e.target.childNodes[index]
@@ -47,7 +53,6 @@ function Home() {
     }
   }
 
-
   const handleChange = (e) => {
     e.preventDefault();
     setSearchString(e.target.value)
@@ -55,20 +60,15 @@ function Home() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    setCurrentPage(1)
     dispatch(getByName(searchString))
   }
-  useEffect(() => {
-    dispatch(getAllActivites())
-  }, [dispatch])
-
-  useEffect(() => {
-    dispatch(getAllCountries())
-  }, [dispatch])
 
   const uniqueContinents = [...new Set(allCountries.map(country => country.continents))];
 
   const handleContinentChange = (e) => {
     const selectedContinent = e.target.value;
+    setCurrentPage(1)
 
     if (selectedContinent === "") {
       dispatch(clearFilter());
@@ -81,6 +81,7 @@ function Home() {
 
   const handleActivityChange = (e) => {
     const selectedActivity = e.target.value;
+    setCurrentPage(1)
 
     if (selectedActivity === "") {
       dispatch(clearFilter())
