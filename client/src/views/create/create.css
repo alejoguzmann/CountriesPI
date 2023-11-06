@@ -1,3 +1,10 @@
+.create{
+    display: flex;
+    justify-content: flex-start;
+    height: auto;
+    width: 1406px;
+}
+
 input{
     border-radius: 8px;
     border: 1px solid transparent;
@@ -10,14 +17,25 @@ input{
     transition: border-color 0.25s;
     margin-top: 10px;
   }
+  
+.form{
+    margin-left: 440px;
+}
 
 .season{
     display: flex;
     justify-content: center;
+    align-content: center;
+    align-items: center;
+    
 }
 
 .checkbox{
     padding: 0px 10px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
 }
 
 .camp{
@@ -27,3 +45,4 @@ input{
 select{
     margin-top: 10px;
 }
+

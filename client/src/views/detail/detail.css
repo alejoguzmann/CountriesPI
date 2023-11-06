@@ -1,0 +1,9 @@
+.detail{
+    display: flex;
+    justify-content: flex-start;
+    width: 1406px;
+}
+
+.cd{
+    margin-left: 315px;
+}

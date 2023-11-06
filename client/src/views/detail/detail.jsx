@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import { getById, clearDetail, activityByCountry } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
+import './detail.css'
+
 function Detail() {
   const { ID } = useParams();
   const countryDetails = useSelector((state) => state.countryDetails);
@@ -28,8 +30,8 @@ function Detail() {
   }, [dispatch, ID])
   
   return (
-    <div>
-      <div>
+    <div className="detail" >
+      <div className="naav">
         <Link to={'/home'}>
           <button>Home</button>
         </Link>
@@ -37,7 +39,7 @@ function Detail() {
           <button>Create activity</button>
         </Link>
       </div>
-      <div>
+      <div className="cd" >
         {countryDetails ? (
           <div>
             <img src={countryDetails.flags} alt={countryDetails.name} />
@@ -52,8 +54,6 @@ function Detail() {
         ) : (
           <p>Loading country details...</p>
         )}
-      </div>
-      <div>
         <h2>Activities:</h2>
         {countryDetails && activityCountDetails ? (
           <ul>

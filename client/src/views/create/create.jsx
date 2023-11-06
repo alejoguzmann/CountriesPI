@@ -3,6 +3,8 @@ import { getAllCountries } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import axios from 'axios';
+import { Link } from 'react-router-dom'
+
 
 import './create.css'
 
@@ -154,139 +156,144 @@ function Create() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Name</label>
+    <div className="create">
+      <div className="homee">
+        <Link to={'/home'} ><button>Home</button></Link>
+      </div>
+      <div className="form" >
+        <form onSubmit={handleSubmit}>
           <div>
-            <input
-              placeholder="Activity name..."
-              type="text"
-              name="name"
-              value={input.name}
-              onChange={handleChange}
-            />
-            {errors.name && <p className="error">{errors.name}</p>}
-          </div>
-        </div>
-        <div>
-          <label htmlFor="difficulty">Difficulty</label>
-          <div>
-            <select
-              name="difficulty"
-              value={input.difficulty}
-              onChange={handleChange}
-            >
-              <option value="">Select difficulty</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-            {errors.difficulty && <p className="error">{errors.difficulty}</p>}
-          </div>
-        </div>
-        <div>
-          <label htmlFor="duration">Duration</label>
-          <div>
-            <select
-              name="duration"
-              value={input.duration}
-              onChange={handleChange}
-            >
-              <option value="">Select duration</option>
-              <option value="1hs">1hs</option>
-              <option value="2hs">2hs</option>
-              <option value="3hs">3hs</option>
-              <option value="4hs">4hs</option>
-              <option value="5hs">5hs</option>
-              <option value="6hs">6hs</option>
-              <option value="7hs">7hs</option>
-              <option value="8hs">8hs</option>
-              <option value="9hs">9hs</option>
-              <option value="10hs">10hs</option>
-            </select>
-          </div>
-          {errors.duration && <p className="error">{errors.duration}</p>}
-        </div>
-        <div>
-          <label>Season</label>
-          <div className="season">
-            <div className="checkbox">
-              <label htmlFor="spring">Spring</label>
+            <label htmlFor="name">Name</label>
+            <div>
               <input
-                type="checkbox"
-                name="season"
-                value="spring"
-                checked={input.season.includes("spring")}
+                placeholder="Activity name..."
+                type="text"
+                name="name"
+                value={input.name}
                 onChange={handleChange}
               />
-            </div>
-            <div className="checkbox">
-              <label htmlFor="summer">Summer</label>
-              <input
-                type="checkbox"
-                name="season"
-                value="summer"
-                checked={input.season.includes("summer")}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="checkbox">
-              <label htmlFor="autumn">Autumn</label>
-              <input
-                type="checkbox"
-                name="season"
-                value="autumn"
-                checked={input.season.includes("autumn")}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="checkbox">
-              <label htmlFor="winter">Winter</label>
-              <input
-                type="checkbox"
-                name="season"
-                value="winter"
-                checked={input.season.includes("winter")}
-                onChange={handleChange}
-              />
+              {errors.name && <p className="error">{errors.name}</p>}
             </div>
           </div>
-          {errors.season && <p className="error">{errors.season}</p>}
-        </div>
-        <div>
-          <label htmlFor="countries">Countries</label>
           <div>
-            <select
-              name="countries"
-              value={selectedCountries}
-              onChange={handleChange}
-              multiple
-            >
-              {allCountries.map((country) => (
-                <option key={country.ID} value={country.ID}>
-                  {country.name}
-                </option>
-              ))}
-            </select>
-            {errors.countries && <p className="error">{errors.countries}</p>}
+            <label htmlFor="difficulty">Difficulty</label>
+            <div>
+              <select
+                name="difficulty"
+                value={input.difficulty}
+                onChange={handleChange}
+              >
+                <option value="">Select difficulty</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+              {errors.difficulty && <p className="error">{errors.difficulty}</p>}
+            </div>
           </div>
-        </div>
-        <div>
-          <h2>Selected Countries:</h2>
-          <ul>
-            {selectedCountries.map((countryId) => {
-              const country = allCountries.find((c) => c.ID === countryId);
-              return (
-                <li key={country.ID}>{country.name}</li>
-              );
-            })}
-          </ul>
-        </div>
-        <button type="submit" disabled={isSubmitButtonDisabled()}>Send</button>
-      </form>
+          <div>
+            <label htmlFor="duration">Duration</label>
+            <div>
+              <select
+                name="duration"
+                value={input.duration}
+                onChange={handleChange}
+              >
+                <option value="">Select duration</option>
+                <option value="1hs">1hs</option>
+                <option value="2hs">2hs</option>
+                <option value="3hs">3hs</option>
+                <option value="4hs">4hs</option>
+                <option value="5hs">5hs</option>
+                <option value="6hs">6hs</option>
+                <option value="7hs">7hs</option>
+                <option value="8hs">8hs</option>
+                <option value="9hs">9hs</option>
+                <option value="10hs">10hs</option>
+              </select>
+            </div>
+            {errors.duration && <p className="error">{errors.duration}</p>}
+          </div>
+          <div>
+            <label>Season</label>
+            <div className="season">
+              <div className="checkbox">
+                <label htmlFor="spring">Spring</label>
+                <input
+                  type="checkbox"
+                  name="season"
+                  value="spring"
+                  checked={input.season.includes("spring")}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="checkbox">
+                <label htmlFor="summer">Summer</label>
+                <input
+                  type="checkbox"
+                  name="season"
+                  value="summer"
+                  checked={input.season.includes("summer")}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="checkbox">
+                <label htmlFor="autumn">Autumn</label>
+                <input
+                  type="checkbox"
+                  name="season"
+                  value="autumn"
+                  checked={input.season.includes("autumn")}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="checkbox">
+                <label htmlFor="winter">Winter</label>
+                <input
+                  type="checkbox"
+                  name="season"
+                  value="winter"
+                  checked={input.season.includes("winter")}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            {errors.season && <p className="error">{errors.season}</p>}
+          </div>
+          <div>
+            <label htmlFor="countries">Countries</label>
+            <div>
+              <select
+                name="countries"
+                value={selectedCountries}
+                onChange={handleChange}
+                multiple
+              >
+                {allCountries.map((country) => (
+                  <option key={country.ID} value={country.ID}>
+                    {country.name}
+                  </option>
+                ))}
+              </select>
+              {errors.countries && <p className="error">{errors.countries}</p>}
+            </div>
+          </div>
+          <div>
+            <h2>Selected Countries:</h2>
+            <ul>
+              {selectedCountries.map((countryId) => {
+                const country = allCountries.find((c) => c.ID === countryId);
+                return (
+                  <li key={country.ID}>{country.name}</li>
+                );
+              })}
+            </ul>
+          </div>
+          <button type="submit" disabled={isSubmitButtonDisabled()}>Send</button>
+        </form>
+      </div>
     </div>
   );
 }
