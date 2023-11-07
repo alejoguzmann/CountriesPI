@@ -1,9 +1,15 @@
 .detail{
     display: flex;
     justify-content: flex-start;
-    width: 1406px;
+    width: 1500px;
+    margin-top: 15px;
 }
 
 .cd{
-    margin-left: 315px;
+    margin-left: 265px;
+    background-color: #A0CED9;
+    color: black;
+    padding: 15px;
+    border-radius: 10px;
+
 }

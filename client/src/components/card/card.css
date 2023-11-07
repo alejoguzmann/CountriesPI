@@ -1,6 +1,7 @@
 .card-container{
     display: flex;
     flex-direction: column;
+    justify-content: center;
     background-color: #A0CED9;
     border: 1px solid grey;
     border-radius: 5px;
@@ -15,8 +16,11 @@
     height: 280px;
 }
 
+
 .card-container:hover {
     transform: scale(1.05);
+    background-color: #318CE7;
+    color: white;
 }
 
 .name{

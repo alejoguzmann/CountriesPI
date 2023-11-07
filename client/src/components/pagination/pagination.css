@@ -1,34 +1,35 @@
 .paginationContainer {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
+    margin-left: 10px;
 }
 .paginationButton {
     padding: 5px 10px;
     margin: 0 5px;
-    background-color: #6A040F;
-    color: white;
     border: none;
     border-radius: 10px;
     cursor: pointer;
 }
 .paginationButton:hover {
-    background-color: #FFBA08;
-    color: black;
+    background-color: #318CE7;
+    color: white;
 }
 .numbers {
-    background-color: #FFBA08;
+    background-color: #A0CED9;
     color: black;
     cursor: pointer;
-    margin-left: 5px;
-    margin-right: 5px;
-    border-radius: 45%;
+    border-radius: 50%;
+    padding: 8px;
+    margin: 2px;
+    width: 40px;
+    height: 40px;
 }
 .numbers:hover {
-    background-color: #6A040F;
+    background-color: #318CE7;
     color: white
 }
 .currentPage {
     background-color: #6A040F;
-    color: #FFBA08;
+    color:#FFBA08;
 }

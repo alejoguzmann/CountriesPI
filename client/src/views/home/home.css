@@ -1,12 +1,10 @@
 body{
   max-width: 1500px;
-  margin: 0;
-  text-align: center;
+  margin: 0px 0px 0px 10px;
   display: flex;
+  text-align: center;
   justify-content: center;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400px;
   color-scheme: light ;
   color: rgba(255, 255, 255, 0.87);
   background-color: #0B1329;
@@ -20,10 +18,10 @@ body{
 
 .home-title {
   margin-top: 0px;
-  margin-bottom: 0px;
+  margin-bottom: 20px;
   font-size: 70px;
   color: white;
-  
+  margin-left: 15px;
 }
 
 .sup{

@@ -25,6 +25,7 @@ const Pagination = ({ countriesForPage , allCountries , clickPag , currentPage }
                 <button
                   key={pageNumber}
                   onClick={() => clickPag(pageNumber)}
+                  className='numbers'
                   >
                   {pageNumber}
                 </button>

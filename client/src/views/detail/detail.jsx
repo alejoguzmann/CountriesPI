@@ -42,7 +42,7 @@ function Detail() {
       <div className="cd" >
         {countryDetails ? (
           <div>
-            <img src={countryDetails.flags} alt={countryDetails.name} />
+            <img src={countryDetails.flags} alt={countryDetails.name} width={500} height={380}/>
             <p>ID: {countryDetails.ID}</p>
             <p>Name: {countryDetails.name}</p>
             <p>Continent:{countryDetails.continents} </p>
