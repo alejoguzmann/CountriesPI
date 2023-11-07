@@ -8,6 +8,11 @@ import { Link } from 'react-router-dom'
 import './create.css'
 
 function Create() {
+  const [selectedCountries, setSelectedCountries] = useState([]);
+  const [errors, setErrors] = useState({});
+  const dispatch = useDispatch();
+  const allCountries = useSelector((state) => state.allCountries);
+  const allActivities = useSelector((state) => state.allActivities);
   const [input, setInput] = useState({
     name: '',
     difficulty: '',
@@ -15,12 +20,11 @@ function Create() {
     season: [],
     countries: [],
   });
-
-  const [selectedCountries, setSelectedCountries] = useState([]);
-  const [errors, setErrors] = useState({});
-  const dispatch = useDispatch();
-  const allCountries = useSelector((state) => state.allCountries);
-  const allActivities = useSelector((state) => state.allActivities);
+  
+  useEffect(() => {
+    dispatch(getAllCountries());
+    dispatch(getAllActivities()); 
+  }, [dispatch]);
 
   const handleChange = (e) => {
     const { name, value, type, options } = e.target;
@@ -35,7 +39,6 @@ function Create() {
       });
     }
 
-    // Validar los campos y actualizar los errores
     const validationErrors = validateFields(input);
     setErrors(validationErrors);
   };
@@ -60,10 +63,6 @@ function Create() {
     setSelectedCountries(selectedValues);
   };
 
-  useEffect(() => {
-    dispatch(getAllCountries());
-    dispatch(getAllActivities()); // Obtener todas las actividades al cargar la página
-  }, [dispatch]);
 
   useEffect(() => {
     const validationErrors = validateFields(input);
@@ -83,7 +82,7 @@ function Create() {
     const validationErrors = {};
 
     if (!/^[A-Za-z\s]+$/.test(name)) {
-      validationErrors.name = "El nombre no puede contener números.";
+      validationErrors.name = "El nombre solo puede contener letras.";
     }
     if (!/^[1-5]$/.test(difficulty)) {
       validationErrors.difficulty = "Seleccione la dificultad.";
@@ -97,7 +96,6 @@ function Create() {
     if (countries.length === 0) {
       validationErrors.countries = "Seleccione al menos un país.";
     }
-    // Validar si el nombre de la actividad ya existe
     if (allActivities.some((activity) => activity.name === name)) {
       validationErrors.name = "Esta actividad ya existe.";
     }
