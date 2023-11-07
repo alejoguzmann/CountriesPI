@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { getAllCountries, getByContinent, getAllActivites, countriesOrder, populationOrder, getByActivity, clearFilter } from '../../redux/actions'
+import { getAllCountries, getByContinent, getAllActivities, countriesOrder, populationOrder, getByActivity, clearFilter } from '../../redux/actions'
 
 function FilterAndOrder({ allCountries, dispatch }) {
   const [selectedContinent, setSelectedContinent] = useState('');
@@ -8,7 +8,7 @@ function FilterAndOrder({ allCountries, dispatch }) {
   const allActivities = useSelector((state) => state.allActivities);
 
   useEffect(() => {
-    dispatch(getAllActivites());
+    dispatch(getAllActivities());
   }, [dispatch]);
 
   const uniqueContinents = [...new Set(allCountries.map(country => country.continents))]

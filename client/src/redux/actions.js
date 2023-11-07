@@ -47,7 +47,7 @@ export function getByContinent(continents) {
   }
 }
 
-export function getAllActivites() {
+export function getAllActivities() {
   return async function (dispatch) {
     const response = await axios (endpointActivities)
     return  dispatch({ 

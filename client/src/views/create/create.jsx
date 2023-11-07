@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { getAllCountries } from "../../redux/actions";
+import { getAllCountries, getAllActivities} from "../../redux/actions";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import axios from 'axios';
 import { Link } from 'react-router-dom'
-
 
 import './create.css'
 
@@ -18,9 +17,10 @@ function Create() {
   });
 
   const [selectedCountries, setSelectedCountries] = useState([]);
-  const [errors, setErrors] = useState({}); // Estado para almacenar erroresad
+  const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
   const allCountries = useSelector((state) => state.allCountries);
+  const allActivities = useSelector((state) => state.allActivities);
 
   const handleChange = (e) => {
     const { name, value, type, options } = e.target;
@@ -60,21 +60,17 @@ function Create() {
     setSelectedCountries(selectedValues);
   };
 
-
   useEffect(() => {
     dispatch(getAllCountries());
+    dispatch(getAllActivities()); // Obtener todas las actividades al cargar la página
   }, [dispatch]);
 
   useEffect(() => {
-    // Llamar a la validación de campos cada vez que cambie el estado 'input'
     const validationErrors = validateFields(input);
     setErrors(validationErrors);
   }, [input]);
 
-  // ...
-
   useEffect(() => {
-    // Llamar a la validación de campos cada vez que cambie el estado 'selectedCountries'
     const validationErrors = validateFields({
       ...input,
       countries: selectedCountries,
@@ -86,14 +82,13 @@ function Create() {
     const { name, difficulty, duration, season, countries } = data;
     const validationErrors = {};
 
-    // Realizar validaciones y agregar errores si es necesario
     if (!/^[A-Za-z\s]+$/.test(name)) {
       validationErrors.name = "El nombre no puede contener números.";
     }
     if (!/^[1-5]$/.test(difficulty)) {
       validationErrors.difficulty = "Seleccione la dificultad.";
     }
-    if (duration.trim() === '') { // Validación para campo obligatorio
+    if (duration.trim() === '') {
       validationErrors.duration = "La duración es obligatoria.";
     }
     if (season.length === 0) {
@@ -101,6 +96,10 @@ function Create() {
     }
     if (countries.length === 0) {
       validationErrors.countries = "Seleccione al menos un país.";
+    }
+    // Validar si el nombre de la actividad ya existe
+    if (allActivities.some((activity) => activity.name === name)) {
+      validationErrors.name = "Esta actividad ya existe.";
     }
 
     return validationErrors;
@@ -126,7 +125,7 @@ function Create() {
           countries: [],
         });
         setSelectedCountries([]);
-        setErrors({}); // Restablecer errores después del envío exitoso
+        setErrors({});
       })
       .catch((error) => {
         console.error('Error en la solicitud:', error);
@@ -134,14 +133,11 @@ function Create() {
   };
 
   const isSubmitButtonDisabled = () => {
-    // Verificar si hay errores en el estado 'errors'
     for (const errorKey in errors) {
       if (errors[errorKey]) {
-        return true; // Botón deshabilitado si se encuentra un error
+        return true;
       }
     }
-
-    // Verificar si hay campos requeridos vacíos
     if (
       input.name.trim() === '' ||
       input.difficulty.trim() === '' ||
@@ -149,10 +145,9 @@ function Create() {
       input.season.length === 0 ||
       selectedCountries.length === 0
     ) {
-      return true; // Botón deshabilitado si hay campos requeridos vacíos
+      return true;
     }
-
-    return false; // Botón habilitado si no hay errores ni campos requeridos vacíos
+    return false;
   };
 
   return (
