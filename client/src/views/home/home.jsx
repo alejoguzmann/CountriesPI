@@ -15,11 +15,9 @@ function Home() {
   const allCountries = useSelector((state) => state.allCountries)
   const filteredCountries = useSelector((state) => state.filteredCountries)
   const allActivities = useSelector((state) => state.allActivities)
-  const [searchString, setSearchString] = useState('')
   const [selectedContinent, setSelectedContinent] = useState(''); 
   const [selectedActivity, setSelectedActivity] = useState(''); 
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10
+
   
   useEffect(() => {
     dispatch(getAllActivites())
@@ -29,7 +27,7 @@ function Home() {
     dispatch(getAllCountries())
   }, [dispatch])
   
-  const handleid = (e) => {
+  const handleAlphabetical = (e) => {
     const index = e.target.selectedIndex
     const optionElement = e.target.childNodes[index]
     const optionElementId = optionElement.getAttribute('id')
@@ -41,7 +39,7 @@ function Home() {
     }
   }
 
-  const jandleid = (e) => {
+  const handlePopulation = (e) => {
     const index = e.target.selectedIndex
     const optionElement = e.target.childNodes[index]
     const optionElementId = optionElement.getAttribute('id')
@@ -53,22 +51,10 @@ function Home() {
     }
   }
 
-  const handleChange = (e) => {
-    e.preventDefault();
-    setSearchString(e.target.value)
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setCurrentPage(1)
-    dispatch(getByName(searchString))
-  }
-
   const uniqueContinents = [...new Set(allCountries.map(country => country.continents))];
 
   const handleContinentChange = (e) => {
     const selectedContinent = e.target.value;
-    setCurrentPage(1)
 
     if (selectedContinent === "") {
       dispatch(clearFilter());
@@ -81,13 +67,12 @@ function Home() {
 
   const handleActivityChange = (e) => {
     const selectedActivity = e.target.value;
-    setCurrentPage(1)
 
     if (selectedActivity === "") {
       dispatch(clearFilter())
       setSelectedActivity("")
     } else {
-      dispatch(getByActivity(selectedActivity)); // Llama a la acción con la actividad seleccionada
+      dispatch(getByActivity(selectedActivity)); 
       setSelectedActivity(selectedActivity)
     }
   };
@@ -98,7 +83,7 @@ function Home() {
       <div className='sup'>
         <Link to={'/home'}><h1 className='home-title'>Countries</h1></Link>
         <div className='nav'>
-        <NavBar className='create' handleChange={handleChange} handleSubmit={handleSubmit} />
+        <NavBar className='create'  />
         </div>
       </div>
 
@@ -119,35 +104,19 @@ function Home() {
             </option>
           ))}
         </select>
-        <select name='alphabetical order' onChange={(e) => handleid(e)}>
+        <select name='alphabetical order' onChange={(e) => handleAlphabetical(e)}>
           <option key="All" id="All" >Alphabetical order</option>
           <option key="Asc" id="Asc" >A - Z</option>
           <option key="Des" id="Des" >Z - A</option>
         </select>
-        <select onChange={(e) => jandleid(e)}>
+        <select onChange={(e) => handlePopulation(e)}>
           <option key="All" id="All" >Order by population</option>
           <option key="Asc" id="Asc" >Ascending order</option>
           <option key="Des" id="Des" >Descending order</option>
         </select>
       </div>
       <div>
-        <Cards
-          allCountries={filteredCountries.length ? filteredCountries : allCountries}
-          currentPage={currentPage}
-          itemsPerPage={itemsPerPage} />
-      </div>
-
-      <div className='buttons'>
-        <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
-          Previus page
-        </button>
-
-        <button
-          onClick={() => setCurrentPage(currentPage + 1)}
-          disabled={currentPage * itemsPerPage >= allCountries.length}
-        >
-          Next page
-        </button>
+        <Cards  tCountries={filteredCountries.length ? filteredCountries : allCountries} />
       </div>
     </div>
   );

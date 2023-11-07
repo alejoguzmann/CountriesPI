@@ -1,26 +1,45 @@
 import Card from '../../components/card/card'
 import { Link } from 'react-router-dom';
-
+import Pagination from '../pagination/pagination';
+import { useState } from 'react';
 import './cards.css'
 
-function Cards({allCountries, currentPage, itemsPerPage}) {
+function Cards({tCountries}) {
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = allCountries.slice(indexOfFirstItem, indexOfLastItem);
+  const [currentPage, setCurrentPage] = useState(1)
 
-    return (
+
+  const countriesForPage = 10
+  const ultIndex = currentPage * countriesForPage
+  const primerIndex = ultIndex - countriesForPage
+
+  const currentCountries = tCountries.slice(
+    primerIndex,
+    ultIndex
+  )
+
+  const clickPag = (numeroPag) => {
+    setCurrentPage(numeroPag)
+  }
+
+  return (
+
+    <div>
       <div className='card-list'>
-        {currentItems.map((country) => (
+        {currentCountries.map((country) => (
           <div key={country.ID} >
             <Link to={`/detail/${country.ID}`}>
-            <Card  country={country}/>
+              <Card country={country} />
             </Link>
           </div>
         ))}
       </div>
-    )
-  }
-  
-  export default Cards
-  
+      <br />
+      <div>
+        <Pagination countriesForPage={countriesForPage} allCountries={tCountries.length} clickPag={clickPag} currentPage={currentPage} />
+      </div>
+    </div>
+  )
+}
+
+export default Cards

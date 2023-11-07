@@ -1,8 +1,23 @@
 import './navBar.css'
 
+import {getByName} from '../../redux/actions'
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 
-function NavBar({handleChange, handleSubmit}) {
+function NavBar() {
+  const dispatch = useDispatch()
+  const [searchString, setSearchString] = useState('')
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setSearchString(e.target.value)
+  }
+  
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    dispatch(getByName(searchString))
+  }
 
     return (
       <div className="searchbar">
