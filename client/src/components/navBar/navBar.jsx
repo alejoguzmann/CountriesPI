@@ -25,7 +25,6 @@ function NavBar() {
           <input className='input' type="text" placeholder="Country name..." />
           <button className='button' type='submit' onClick={handleSubmit} >Buscar</button>
           <Link to={'/create'} ><button>Create activity</button></Link>
-
         </form>
       </div>
     )
