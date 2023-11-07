@@ -34,7 +34,7 @@ function Cards({tCountries}) {
           </div>
         ))}
       </div>
-      <br />
+      <p className='cp'>Page: {currentPage}</p>
       <div>
         <Pagination countriesForPage={countriesForPage} allCountries={tCountries.length} clickPag={clickPag} currentPage={currentPage} />
       </div>
