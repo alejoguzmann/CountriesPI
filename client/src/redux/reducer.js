@@ -17,7 +17,7 @@ const initialState = {
       filteredCountries: [],
       allActivities: [],
       countryDetails: null,
-      activityCountryDetails: null
+      activityCountryDetails: []
 }
 
 const reducer = (state = initialState, action) => {
@@ -51,7 +51,7 @@ const reducer = (state = initialState, action) => {
             return{
                 ...state,
                 countryDetails: null,
-                activityCountryDetails: null
+                activityCountryDetails: []
             }  
         case CLEAR_FILTER:
             return{

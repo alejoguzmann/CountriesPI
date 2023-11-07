@@ -54,9 +54,9 @@ function Detail() {
         ) : (
           <p>Loading country details...</p>
         )}
-        <h2>Activities:</h2>
-        {countryDetails && activityCountDetails ? (
+        {activityCountDetails.length > 0 ? (
           <ul>
+            <h2>Activities:</h2>
             {activityCountDetails.map((activity, index) => (
               <li key={index}>
                 <p>Name: {activity.name}</p>
@@ -67,7 +67,7 @@ function Detail() {
             ))}
           </ul>
         ) : (
-          <p>No activities available.</p>
+          <h2>No activities available.</h2>
         )}
       </div>
     </div>
