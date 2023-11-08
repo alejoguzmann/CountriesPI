@@ -90,10 +90,10 @@ export function clearFilter() {
   }
 }
 
-export function countriesOrder(filter) {
+export function countriesOrder(order) {
   return{
     type:COUTRIES_ORDER,
-    payload: filter
+    payload: order
   }
 }
 

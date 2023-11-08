@@ -82,22 +82,22 @@ function Create() {
     const validationErrors = {};
 
     if (!/^[A-Za-z\s]+$/.test(name)) {
-      validationErrors.name = "El nombre solo puede contener letras.";
+      validationErrors.name = "The name can only contain letters.";
     }
     if (!/^[1-5]$/.test(difficulty)) {
-      validationErrors.difficulty = "Seleccione la dificultad.";
+      validationErrors.difficulty = "Select difficulty.";
     }
     if (duration.trim() === '') {
-      validationErrors.duration = "La duración es obligatoria.";
+      validationErrors.duration = "select duration.";
     }
     if (season.length === 0) {
-      validationErrors.season = "Seleccione al menos una estación.";
+      validationErrors.season = "Select at least one station.";
     }
     if (countries.length === 0) {
-      validationErrors.countries = "Seleccione al menos un país.";
+      validationErrors.countries = "Select at least one country.";
     }
     if (allActivities.some((activity) => activity.name === name)) {
-      validationErrors.name = "Esta actividad ya existe.";
+      validationErrors.name = "This activity already exists.";
     }
 
     return validationErrors;
