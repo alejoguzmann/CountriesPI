@@ -3,7 +3,9 @@
     justify-content: space-evenly;
     align-items: center;
     margin-left: 10px;
+    margin-top: 10px;
 }
+
 .paginationButton {
     padding: 5px 10px;
     margin: 0 5px;
@@ -11,10 +13,12 @@
     border-radius: 10px;
     cursor: pointer;
 }
+
 .paginationButton:hover {
     background-color: #318CE7;
     color: white;
 }
+
 .numbers {
     background-color: #A0CED9;
     color: black;
@@ -25,8 +29,14 @@
     width: 40px;
     height: 40px;
 }
+
 .numbers:hover {
     background-color: #318CE7;
-    color: white
+    color: white;
 }
 
+.activePage {
+    background-color: #318CE7;
+    color: white;
+    font-weight: bold;
+}

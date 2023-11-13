@@ -16,7 +16,7 @@ const Pagination = ({ countriesForPage , allCountries , clickPag , currentPage }
                 onClick={() => {
                   if (currentPage > 1) clickPag(currentPage - 1);
                 }}
-                
+                disabled={currentPage === 1}
               >
                 Prev
               </button>
@@ -25,7 +25,8 @@ const Pagination = ({ countriesForPage , allCountries , clickPag , currentPage }
                 <button
                   key={pageNumber}
                   onClick={() => clickPag(pageNumber)}
-                  className='numbers'
+                  className={`numbers ${pageNumber === currentPage ? 'activePage' : ''}`}
+                  disabled={pageNumber === currentPage}
                   >
                   {pageNumber}
                 </button>
@@ -36,6 +37,7 @@ const Pagination = ({ countriesForPage , allCountries , clickPag , currentPage }
                   if (currentPage < totalPages) clickPag(currentPage + 1);
                 }}
                 className='paginationButton'
+                disabled={currentPage === totalPages}
               >
                 Next
               </button>
