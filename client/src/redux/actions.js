@@ -11,7 +11,8 @@ import {
   GET_BY_ACTIVITY,
   CLEAR_DETAIL,
   CLEAR_FILTER,
-  ACTIVITY_BY_CONTRIES
+  ACTIVITY_BY_CONTRIES,
+  SET_CURRENT_PAGE
 } from "./types";
 
 const endpointCountries = "http://localhost:3001/countries";
@@ -113,3 +114,10 @@ export function getByActivity(activity) {
     });
   };
 }
+
+export const setCurrentPage = (page) => {
+  return {
+    type: SET_CURRENT_PAGE,
+    payload: page,
+  };
+};

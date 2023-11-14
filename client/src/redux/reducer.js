@@ -9,7 +9,8 @@ import {
     GET_BY_ACTIVITY,
     CLEAR_DETAIL,
     CLEAR_FILTER,
-    ACTIVITY_BY_CONTRIES
+    ACTIVITY_BY_CONTRIES,
+    SET_CURRENT_PAGE
 } from "./types";
 
 const initialState = {
@@ -17,7 +18,8 @@ const initialState = {
       filteredCountries: [],
       allActivities: [],
       countryDetails: null,
-      activityCountryDetails: []
+      activityCountryDetails: [],
+      currentPage: 1
 }
 
 const reducer = (state = initialState, action) => {
@@ -100,6 +102,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 allCountries: population.concat([])
         }
+        case SET_CURRENT_PAGE:
+      return {
+        ...state,
+        currentPage: action.payload,
+      };
         default:
             return state
     }
