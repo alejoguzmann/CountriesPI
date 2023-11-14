@@ -1,9 +1,10 @@
 import './navBar.css'
 
-import {getByName} from '../../redux/actions'
+import {getByName, setCurrentPage} from '../../redux/actions'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
+
 
 function NavBar() {
   const dispatch = useDispatch()
@@ -17,6 +18,7 @@ function NavBar() {
   const handleSubmit = (e) => {
     e.preventDefault()
     dispatch(getByName(searchString))
+    dispatch(setCurrentPage(1))
   }
 
     return (

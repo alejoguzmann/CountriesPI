@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { getAllCountries, getByContinent, getAllActivities, countriesOrder, populationOrder, getByActivity, clearFilter } from '../../redux/actions'
+import { getAllCountries, getByContinent, getAllActivities, countriesOrder, populationOrder, getByActivity, clearFilter, setCurrentPage } from '../../redux/actions'
 
 function FilterAndOrder({ allCountries, dispatch }) {
   const [selectedContinent, setSelectedContinent] = useState('');
@@ -14,6 +14,7 @@ function FilterAndOrder({ allCountries, dispatch }) {
   const uniqueContinents = [...new Set(allCountries.map(country => country.continents))]
 
   const handleContinentChange = (selectedContinent) => {
+    dispatch(setCurrentPage(1))
     if (selectedContinent === "") {
       dispatch(clearFilter());
       setSelectedContinent(""); 
@@ -24,6 +25,7 @@ function FilterAndOrder({ allCountries, dispatch }) {
   };
 
   const handleActivityChange = (selectedActivity) => {
+    dispatch(setCurrentPage(1))
     if (selectedActivity === "") {
       dispatch(clearFilter())
       setSelectedActivity("")
@@ -37,6 +39,7 @@ function FilterAndOrder({ allCountries, dispatch }) {
     const index = e.target.selectedIndex;
     const optionElement = e.target.childNodes[index];
     const optionElementId = optionElement.getAttribute('id');
+    dispatch(setCurrentPage(1))
 
     if (optionElementId === "All") {
       dispatch(getAllCountries())
@@ -49,6 +52,7 @@ function FilterAndOrder({ allCountries, dispatch }) {
     const index = e.target.selectedIndex;
     const optionElement = e.target.childNodes[index];
     const optionElementId = optionElement.getAttribute('id');
+    dispatch(setCurrentPage(1))
 
     if (optionElementId === "All") {
       dispatch(getAllCountries())
