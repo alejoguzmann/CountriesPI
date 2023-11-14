@@ -18,8 +18,8 @@ const Pagination = ({ countriesForPage, allCountries, clickPag }) => {
   return (
     <div className="paginationContainer">
       <button
-        className="paginationButton"
-        onClick={() => {
+          className={`paginationButton ${currentPage === 1 ? 'disabled' : ''}`}
+          onClick={() => {
           if (currentPage > 1) {
             dispatch(setCurrentPage(currentPage - 1));
           }
@@ -46,7 +46,7 @@ const Pagination = ({ countriesForPage, allCountries, clickPag }) => {
             dispatch(setCurrentPage(currentPage + 1));
           }
         }}
-        className="paginationButton"
+        className={`paginationButton ${currentPage === totalPages ? 'disabled' : ''}`}
         disabled={currentPage === totalPages}
       >
         Next

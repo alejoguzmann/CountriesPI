@@ -17,7 +17,7 @@ function FilterAndOrder({ allCountries, dispatch }) {
     dispatch(setCurrentPage(1))
     if (selectedContinent === "") {
       dispatch(clearFilter());
-      setSelectedContinent(""); 
+      setSelectedContinent("");
     } else {
       dispatch(getByContinent(selectedContinent));
       setSelectedContinent(selectedContinent);
@@ -30,7 +30,7 @@ function FilterAndOrder({ allCountries, dispatch }) {
       dispatch(clearFilter())
       setSelectedActivity("")
     } else {
-      dispatch(getByActivity(selectedActivity)); 
+      dispatch(getByActivity(selectedActivity));
       setSelectedActivity(selectedActivity)
     }
   };
@@ -64,7 +64,8 @@ function FilterAndOrder({ allCountries, dispatch }) {
   return (
     <div className='filter'>
       <select name="continent" id="continent" onChange={(e) => handleContinentChange(e.target.value)}>
-        <option value="">Filter by Continents</option>
+        <option>Filter by Continents</option>
+        <option value="">All Countries</option>
         {uniqueContinents.map((continent, index) => (
           <option key={index} value={continent}>
             {continent}
@@ -72,7 +73,8 @@ function FilterAndOrder({ allCountries, dispatch }) {
         ))}
       </select>
       <select name="activities" id="activities" onChange={(e) => handleActivityChange(e.target.value)}>
-        <option value="">Filter by activity</option>
+        <option>Filter by activity</option>
+        <option value="">All Countries</option>
         {allActivities.map((activity, index) => (
           <option key={index} value={activity.name}>
             {activity.name}

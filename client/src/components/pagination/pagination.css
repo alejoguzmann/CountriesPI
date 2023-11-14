@@ -40,3 +40,8 @@
     color: white;
     font-weight: bold;
 }
+.paginationButton.disabled {
+    cursor: not-allowed;
+    background-color: #ddd; /* Puedes cambiar este color a tu preferencia para indicar que está desactivado */
+    color: #666; /* Puedes cambiar este color a tu preferencia para indicar que está desactivado */
+  }
