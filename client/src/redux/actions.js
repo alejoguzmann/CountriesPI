@@ -6,7 +6,6 @@ import {
   GET_BY_NAME, 
   GET_ALL_ACTIVITIES, 
   COUTRIES_ORDER, 
-  POPULATION_ORDER,
   GET_BY_ID,
   GET_BY_ACTIVITY,
   CLEAR_DETAIL,
@@ -98,13 +97,6 @@ export function countriesOrder(order) {
   }
 }
 
-export function populationOrder(population) {
-  return{
-    type:POPULATION_ORDER,
-    payload: population
-  }
-}
-
 export function getByActivity(activity) {
   return async function (dispatch) {
     const response = await axios(`http://localhost:3001/activity?nameActivity=${activity}`);
@@ -121,3 +113,4 @@ export const setCurrentPage = (page) => {
     payload: page,
   };
 };
+

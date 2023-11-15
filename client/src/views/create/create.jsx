@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getAllCountries, getAllActivities} from "../../redux/actions";
+import { getAllCountries, getAllActivities } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import axios from 'axios';
@@ -20,10 +20,10 @@ function Create() {
     season: [],
     countries: [],
   });
-  
+
   useEffect(() => {
     dispatch(getAllCountries());
-    dispatch(getAllActivities()); 
+    dispatch(getAllActivities());
   }, [dispatch]);
 
   const handleChange = (e) => {
@@ -270,6 +270,7 @@ function Create() {
                   </option>
                 ))}
               </select>
+              <p>press ctrl to select more than one country</p>
               {errors.countries && <p className="error">{errors.countries}</p>}
             </div>
           </div>

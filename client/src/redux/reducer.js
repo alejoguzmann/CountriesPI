@@ -4,7 +4,6 @@ import {
     GET_BY_NAME,
     GET_ALL_ACTIVITIES,
     COUTRIES_ORDER,
-    POPULATION_ORDER,
     GET_BY_ID,
     GET_BY_ACTIVITY,
     CLEAR_DETAIL,
@@ -20,10 +19,9 @@ const initialState = {
     countryDetails: null,
     activityCountryDetails: [],
     currentPage: 1,
-    selectedContinent: "", // Nuevo estado para el continente seleccionado
-    selectedActivity: "", // Nuevo estado para la actividad seleccionada
-    alphabeticalOrder: "All", // Nuevo estado para el orden alfabético seleccionado
-    populationOrder: "All"
+    selectedContinent: null,
+    selectedActivity: null,
+    alphabeticalOrder: "",
 }
 
 const reducer = (state = initialState, action) => {
@@ -32,6 +30,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 allCountries: action.payload,
+                filteredCountries: action.payload
             };
         case GET_BY_NAME:
             return {
@@ -42,7 +41,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 filteredCountries: action.payload,
-                selectedContinent: action.payload ? action.payload[0].continents : "" // Assuming continents is an array
+                selectedContinent: action.payload ? action.payload[0].continents : "" 
             }
         case GET_BY_ID:
             return {
@@ -63,11 +62,10 @@ const reducer = (state = initialState, action) => {
         case CLEAR_FILTER:
             return {
                 ...state,
-                filteredCountries: [],
-                selectedContinent: "",
-                selectedActivity: "",
-                alphabeticalOrder: "All",
-                populationOrder: "All"
+                filteredCountries: state.allCountries,
+                selectedActivity:"",
+                selectedContinent:"",
+                alphabeticalOrder:""
             }
         case GET_ALL_ACTIVITIES:
             return {
@@ -78,42 +76,23 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 filteredCountries: action.payload,
-                selectedActivity: action.payload ? action.payload[0].activity : "" // Assuming activity is a string
+                selectedActivity: action.payload ? action.payload[0].activity : "" 
             }
-        case COUTRIES_ORDER:
-            let order = action.payload === "Asc"
-                ? state.allCountries.sort(function (a, b) {
-                    if (a.name > b.name) return 1;
-                    if (b.name > a.name) return -1;
-                    return 0;
-                })
-                : state.allCountries.sort(function (a, b) {
-                    if (a.name > b.name) return -1;
-                    if (b.name > a.name) return 1;
-                    return 0;
-                })
-            return {
-                ...state,
-                allCountries: order.concat([]),
-                alphabeticalOrder: action.payload
-            }
-        case POPULATION_ORDER:
-            let population = action.payload === "Asc"
-                ? state.allCountries.sort(function (a, b) {
-                    if (a.population > b.population) return 1;
-                    if (b.population > a.population) return -1;
-                    return 0;
-                })
-                : state.allCountries.sort(function (a, b) {
-                    if (a.population > b.population) return -1;
-                    if (b.population > a.population) return 1;
-                    return 0;
-                })
-            return {
-                ...state,
-                allCountries: population.concat([]),
-                populationOrder: action.payload
-            }
+            case COUTRIES_ORDER:
+                const orderType = action.payload;
+                let sortedCountries;
+                if (orderType === "") {
+                    sortedCountries = state.filteredCountries
+                } else if (orderType === "Asc") {
+                    sortedCountries = [...state.filteredCountries].sort((a, b) => a.name.localeCompare(b.name));
+                } else {
+                    sortedCountries = [...state.filteredCountries].sort((a, b) => b.name.localeCompare(a.name));
+                }            
+                return {
+                    ...state,
+                    filteredCountries: sortedCountries,
+                    alphabeticalOrder: orderType,
+                };
         case SET_CURRENT_PAGE:
             return {
                 ...state,

@@ -1,8 +1,16 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { getAllCountries, getByContinent, getAllActivities, countriesOrder, populationOrder, getByActivity, clearFilter, setCurrentPage } from '../../redux/actions';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  getByContinent,
+  getAllActivities,
+  countriesOrder,
+  getByActivity,
+  clearFilter,
+  setCurrentPage,
+} from '../../redux/actions';
 
-function FilterAndOrder({ dispatch, selectedContinent, selectedActivity, alphabeticalOrder, populationOrder }) {
+function FilterAndOrder({ selectedContinent, selectedActivity, alphabeticalOrder }) {
+  const dispatch = useDispatch();
   const allCountries = useSelector((state) => state.allCountries);
   const allActivities = useSelector((state) => state.allActivities);
 
@@ -10,7 +18,7 @@ function FilterAndOrder({ dispatch, selectedContinent, selectedActivity, alphabe
     dispatch(getAllActivities());
   }, [dispatch]);
 
-  const uniqueContinents = [...new Set(allCountries.map(country => country.continents))];
+  const uniqueContinents = [...new Set(allCountries.map((country) => country.continents))];
 
   const handleContinentChange = (selectedContinent) => {
     dispatch(setCurrentPage(1));
@@ -32,53 +40,56 @@ function FilterAndOrder({ dispatch, selectedContinent, selectedActivity, alphabe
 
   const handleAlphabeticalChange = (e) => {
     dispatch(setCurrentPage(1));
-    const orderType = e.target.value;
-    if (orderType === "All") {
-      dispatch(countriesOrder(orderType));
-    } else {
-      dispatch(countriesOrder(orderType));
+    if (e.target.value === "") {
+      if (selectedContinent) {
+        getByContinent(selectedContinent)
+      }
     }
-  };
-
-  const handlePopulationChange = (e) => {
-    dispatch(setCurrentPage(1));
-    const orderType = e.target.value;
-    if (orderType === "All") {
-      dispatch(populationOrder(orderType));
-    } else {
-      dispatch(populationOrder(orderType));
-    }
+    dispatch(countriesOrder(e.target.value));
   };
 
   return (
     <div className='filter'>
-      <select name="continent" id="continent" onChange={(e) => handleContinentChange(e.target.value)} value={selectedContinent}>
-        <option>Filter by Continents</option>
-        <option value="">All Countries</option>
+      <select
+        name="continent"
+        id="continent"
+        onChange={(e) => handleContinentChange(e.target.value)}
+        value={selectedContinent}
+      >
+        <option value="">Filter by Continents</option>
         {uniqueContinents.map((continent, index) => (
           <option key={index} value={continent}>
             {continent}
           </option>
         ))}
       </select>
-      <select name="activities" id="activities" onChange={(e) => handleActivityChange(e.target.value)} value={selectedActivity}>
-        <option>Filter by activity</option>
-        <option value="">All Countries</option>
+
+      <select
+        name="activities"
+        id="activities"
+        onChange={(e) => handleActivityChange(e.target.value)}
+        value={selectedActivity}
+      >
+        <option value="">Filter by Activity</option>
         {allActivities.map((activity, index) => (
           <option key={index} value={activity.name}>
             {activity.name}
           </option>
         ))}
       </select>
-      <select name='alphabetical order' onChange={handleAlphabeticalChange} value={alphabeticalOrder}>
-        <option key="All" value="All">Alphabetical order</option>
-        <option key="Asc" value="Asc">A - Z</option>
-        <option key="Des" value="Des">Z - A</option>
-      </select>
-      <select onChange={handlePopulationChange} value={populationOrder}>
-        <option key="All" value="All">Order by population</option>
-        <option key="Asc" value="Asc">Ascending order</option>
-        <option key="Des" value="Des">Descending order</option>
+
+      <select
+        name='alphabetical order'
+        onChange={handleAlphabeticalChange}
+        value={alphabeticalOrder}
+      >
+        <option value="">Alphabetical order</option>
+        <option key="Asc" value="Asc">
+          A - Z
+        </option>
+        <option key="Des" value="Des">
+          Z - A
+        </option>
       </select>
     </div>
   );
