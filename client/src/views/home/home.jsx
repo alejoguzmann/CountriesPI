@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { getAllCountries } from '../../redux/actions';
+import { clearFilter, getAllCountries } from '../../redux/actions';
 
 import NavBar from '../../components/navBar/navBar';
 import Cards from '../../components/cards/cards';
@@ -18,8 +18,9 @@ function Home() {
   const alphabeticalOrder = useSelector((state) => state.alphabeticalOrder);
 
   useEffect(() => {
+    dispatch(clearFilter())
     dispatch(getAllCountries());
-  }, []);
+  }, [dispatch]);
 
 
   return (

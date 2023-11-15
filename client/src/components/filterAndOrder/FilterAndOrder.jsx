@@ -39,12 +39,7 @@ function FilterAndOrder({ selectedContinent, selectedActivity, alphabeticalOrder
   };
 
   const handleAlphabeticalChange = (e) => {
-    dispatch(setCurrentPage(1));
-    if (e.target.value === "") {
-      if (selectedContinent) {
-        getByContinent(selectedContinent)
-      }
-    }
+    dispatch(setCurrentPage(1))
     dispatch(countriesOrder(e.target.value));
   };
 

@@ -19,8 +19,8 @@ const initialState = {
     countryDetails: null,
     activityCountryDetails: [],
     currentPage: 1,
-    selectedContinent: null,
-    selectedActivity: null,
+    selectedContinent: "",
+    selectedActivity: "",
     alphabeticalOrder: "",
 }
 
@@ -41,7 +41,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 filteredCountries: action.payload,
-                selectedContinent: action.payload ? action.payload[0].continents : "" 
+                selectedContinent: action.payload ? action.payload[0].continents : ""
             }
         case GET_BY_ID:
             return {
@@ -63,9 +63,9 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 filteredCountries: state.allCountries,
-                selectedActivity:"",
-                selectedContinent:"",
-                alphabeticalOrder:""
+                selectedActivity: "",
+                selectedContinent: "",
+                alphabeticalOrder: ""
             }
         case GET_ALL_ACTIVITIES:
             return {
@@ -76,23 +76,23 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 filteredCountries: action.payload,
-                selectedActivity: action.payload ? action.payload[0].activity : "" 
+                selectedActivity: action.payload ? action.payload[0].activity : ""
             }
-            case COUTRIES_ORDER:
-                const orderType = action.payload;
-                let sortedCountries;
-                if (orderType === "") {
-                    sortedCountries = state.filteredCountries
-                } else if (orderType === "Asc") {
-                    sortedCountries = [...state.filteredCountries].sort((a, b) => a.name.localeCompare(b.name));
-                } else {
-                    sortedCountries = [...state.filteredCountries].sort((a, b) => b.name.localeCompare(a.name));
-                }            
-                return {
-                    ...state,
-                    filteredCountries: sortedCountries,
-                    alphabeticalOrder: orderType,
-                };
+        case COUTRIES_ORDER:
+            const orderType = action.payload;
+            let sortedCountries;
+            if (orderType === "") {
+                sortedCountries = state.allCountries
+            } else if (orderType === "Asc") {
+                sortedCountries = [...state.filteredCountries].sort((a, b) => a.name.localeCompare(b.name));
+            } else {
+                sortedCountries = [...state.filteredCountries].sort((a, b) => b.name.localeCompare(a.name));
+            }
+            return {
+                ...state,
+                filteredCountries: sortedCountries,
+                alphabeticalOrder: orderType,
+            };
         case SET_CURRENT_PAGE:
             return {
                 ...state,
